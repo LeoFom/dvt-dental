@@ -48,7 +48,11 @@ function Hero() {
     <div className="hero-stage">
       <HeroVideo/>
       <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> СТОМАТОЛОГІЯ В ІВАНО-ФРАНКІВСЬКУ</p>
-        <h1 id="hero-title">Здорові зуби.<br/><span>Впевнена</span><br/>усмішка.</h1>
+        <h1 id="hero-title" className="hero-title">
+          <span className="hero-title-intro">Здорові зуби.</span>{' '}
+          <span className="hero-title-main">Впевнена</span>{' '}
+          <span className="hero-title-accent">усмішка.</span>
+        </h1>
         <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
         <div className="hero-actions"><a className="button button-dark" href="#contacts">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
         <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
