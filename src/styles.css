@@ -127,25 +127,19 @@
   .request-intro { min-width: 0; padding-top: 24px; }
   .request-intro h2 { max-inline-size: 12ch; font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
   .request-description { max-width: 36ch; margin-top: 24px; color: var(--color-muted); font-size: 17px; line-height: 1.7; text-wrap: pretty; }
-  .request-phone { display: inline-flex; align-items: center; gap: 16px; min-height: 44px; margin-top: 36px; }
-  .request-phone > .icon { width: 24px; height: 24px; }
-  .request-phone-label { display: block; color: var(--color-muted); font-size: 13px; line-height: 1.6; }
-  .request-phone-number { display: block; font-size: 22px; font-weight: 500; line-height: 1.5; letter-spacing: -.025em; }
-  .request-phone:hover .request-phone-number { text-decoration: underline; text-underline-offset: 5px; }
-  .message-builder { min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 24px; border: 1px solid var(--color-line); border-radius: 4px; background: #fbfbf7; }
+  .request-form { min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 24px; border: 1px solid var(--color-line); border-radius: 4px; background: #fbfbf7; }
   .request-field { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-  .message-builder label { font-size: 14px; font-weight: 550; line-height: 1.6; }
-  .message-builder select, .message-builder textarea { min-width: 0; width: 100%; padding: 14px 16px; border: 1px solid #858c7b; border-radius: 4px; background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.65; transition: border-color .18s; }
-  .message-builder select { min-height: 54px; }
-  .message-builder textarea { resize: vertical; min-height: 180px; }
-  .message-builder select:hover, .message-builder textarea:hover { border-color: var(--color-ink); }
-  .request-hint { color: var(--color-muted); font-size: 13px; line-height: 1.6; }
-  .request-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; }
-  .request-actions .button { flex: 1; }
-  .request-actions .text-link { flex: 0 0 auto; }
-  .copy-feedback { font-size: 13px; min-height: 3.2em; margin-top: -8px; color: var(--color-muted); line-height: 1.6; }
-  .copy-feedback[data-state='success'] { color: #45622a; }
-  .copy-feedback[data-state='error'] { color: #8b342b; }
+  .request-form label { font-size: 14px; font-weight: 550; line-height: 1.6; }
+  .request-optional { margin-left: 6px; color: var(--color-muted); font-size: 12px; font-weight: 400; }
+  .request-form input { min-width: 0; width: 100%; min-height: 54px; padding: 14px 16px; border: 1px solid #858c7b; border-radius: 4px; background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.65; transition: border-color .18s; }
+  .request-form input::placeholder { color: var(--color-muted); opacity: 1; }
+  .request-form input:hover { border-color: var(--color-ink); }
+  .request-form input[aria-invalid='true'] { border-color: #8b342b; }
+  .request-field-error { color: #8b342b; font-size: 13px; line-height: 1.6; }
+  .request-submit { width: 100%; justify-content: center; }
+  .request-status { margin-top: -8px; font-size: 14px; color: var(--color-muted); line-height: 1.7; }
+  .request-status a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-ink); text-decoration: underline; text-underline-offset: 4px; }
+  .request-status a:hover { color: #45622a; }
   .faq-section { display: grid; grid-template-columns: 1fr 1.18fr; gap: 90px; border-top: 1px solid var(--color-line); }
   .faq-section h2 { font-size: clamp(32px, 3vw, 43px); }
   .faq-section .section-description { margin-top: 24px; max-width: 260px; }
@@ -190,7 +184,7 @@
   .desktop-nav { gap: 18px; }
   .header-call { font-size: 13px; }
   .faq-section { gap: 44px; }
-  .message-builder { padding: 24px; }
+  .request-form { padding: 24px; }
   .service-card, .service-help { padding: 22px; }
   .service-card h3, .service-help h3 { font-size: 20px; }
 }
@@ -226,7 +220,6 @@
   .request-intro { padding-top: 0; }
   .request-intro h2 { max-inline-size: 20ch; font-size: 34px; }
   .request-description { max-width: 56ch; margin-top: 20px; font-size: 16px; }
-  .request-phone { margin-top: 24px; }
   .faq-section { gap: 30px; }
   .faq-section h2 { font-size: 32px; }
   .contacts-grid { gap: 22px; }
@@ -270,10 +263,7 @@
   .clinic-topics > div { grid-template-columns: 1fr; gap: 5px; padding-block: 16px; }
   .clinic-details > .button { margin-top: 24px; }
   .request-intro h2 { font-size: clamp(28px, 7vw, 34px); }
-  .message-builder { padding: 20px; }
-  .message-builder textarea { min-height: 220px; }
-  .request-actions { flex-direction: column; align-items: stretch; gap: 12px; }
-  .request-actions .text-link { justify-content: center; }
+  .request-form { padding: 20px; }
   .faq-section { grid-template-columns: 1fr; gap: 30px; }
   .faq-section h2 { font-size: 35px; }
   .faq-section .section-description { max-width: 300px; }

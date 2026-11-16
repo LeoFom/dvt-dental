@@ -1,14 +1,14 @@
-import { StrictMode, useEffect, useRef, useState } from 'react';
+import { StrictMode, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { clinic, questions, services } from './content';
 import { HeroVideo } from './HeroVideo';
+import { ContactRequestForm } from './ContactRequestForm';
 import './styles.css';
 
-type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross' | 'copy';
+type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
 function Icon({ name, className = '' }: { name: IconName | string; className?: string }) {
   const paths: Record<string, React.ReactNode> = {
     arrow: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
-    copy: <><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></>,
     phone: <path d="m8 3 3 5-3 3c1.5 2.5 3.5 4.5 6 6l3-3 4 3c-1 4-3 5-6 3C8 17 4 13 3 7c0-2 2-4 5-4Z" />,
     pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></>,
     plus: <path d="M12 5v14M5 12h14" />,
@@ -47,7 +47,7 @@ function Hero() {
       <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> Стоматологія в Івано-Франківську</p>
         <h1 id="hero-title" className="hero-title">Здорова усмішка</h1>
         <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
-        <div className="hero-actions"><a className="button button-dark" href="#contacts">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
+        <div className="hero-actions"><a className="button button-dark" href="#request">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
         <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
       </div>
     </div>
@@ -76,41 +76,14 @@ function Clinic() {
       <div><dt>Ваш запит</dt><dd>Що вас турбує та що хочеться змінити в усмішці.</dd></div>
       <div><dt>Можливі рішення</dt><dd>Які варіанти лікування можна розглянути у вашій ситуації.</dd></div>
       <div><dt>План і вартість</dt><dd>Які етапи, строки та витрати передбачає лікування.</dd></div>
-    </dl><a className="button button-dark" href="#request" onClick={focusRequest}>Підготувати запит<Icon name="arrow"/></a></div>
+    </dl><a className="button button-dark" href="#request" onClick={focusRequest}>Залишити заявку<Icon name="arrow"/></a></div>
   </div></section>;
 }
 
-function RequestBuilder() {
-  const initial = new URLSearchParams(window.location.search).get('service') ?? '';
-  const [selected, setSelected] = useState(services.some(s => s.id === initial) ? initial : '');
-  const [copyState, setCopyState] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
-  const messageRef = useRef<HTMLTextAreaElement>(null);
-  const topic = services.find(s => s.id === selected)?.title;
-  const message = `Добрий день! ${topic ? `Хочу обговорити послугу «${topic}».` : 'Хочу узгодити огляд у DVT Denta.'} Підкажіть, будь ласка, доступний час і вартість першого прийому.`;
-  useEffect(() => {
-    const onPop = () => { const id = new URLSearchParams(window.location.search).get('service') ?? ''; setSelected(services.some(s => s.id === id) ? id : ''); setCopyState('idle'); };
-    window.addEventListener('popstate', onPop);
-    return () => window.removeEventListener('popstate', onPop);
-  }, []);
-  function updateService(value: string) {
-    setSelected(value); setCopyState('idle');
-    const url = new URL(window.location.href);
-    if (value) url.searchParams.set('service', value); else url.searchParams.delete('service');
-    window.history.pushState(null, '', url);
-  }
-  async function copyMessage() {
-    setCopyState('pending');
-    try { await navigator.clipboard.writeText(message); setCopyState('success'); }
-    catch { setCopyState('error'); messageRef.current?.focus(); messageRef.current?.select(); }
-  }
+function RequestForm() {
   return <section id="request" tabIndex={-1} className="wrap section request-section" aria-labelledby="request-title"><div className="request-card">
-    <div className="request-intro"><h2 id="request-title">Підготуйте запит</h2><p className="request-description">Оберіть тему звернення, скопіюйте готовий текст і надішліть його в Instagram клініки.</p><a className="request-phone" href={clinic.phoneHref}><Icon name="phone"/><span><span className="request-phone-label">Або зателефонуйте</span><span className="request-phone-number">{clinic.phone}</span></span></a></div>
-    <div className="message-builder">
-      <div className="request-field"><label htmlFor="service">Тема звернення</label><select id="service" name="service" autoComplete="off" value={selected} onChange={e => updateService(e.target.value)}><option value="">Хочу почати з огляду</option>{services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}</select></div>
-      <div className="request-field"><label htmlFor="message">Текст для Instagram</label><textarea ref={messageRef} id="message" name="message" autoComplete="off" value={message} readOnly rows={6} aria-describedby="message-hint copy-feedback"/><p id="message-hint" className="request-hint">Текст змінюється залежно від обраної теми.</p></div>
-      <div className="request-actions"><button type="button" className="button button-dark" onClick={copyMessage} disabled={copyState === 'pending'}>{copyState === 'pending' ? 'Копіюємо…' : copyState === 'success' ? 'Текст скопійовано' : 'Скопіювати текст'}<Icon name="copy"/></button><a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Відкрити Instagram<Icon name="instagram"/></a></div>
-      <p id="copy-feedback" className="copy-feedback" data-state={copyState} role="status">{copyState === 'success' ? 'Текст скопійовано. Відкрийте Instagram і вставте його в повідомлення клініці.' : copyState === 'error' ? 'Не вдалося скопіювати. Текст виділено — скопіюйте його вручну.' : 'Запит ще не надіслано. Надішліть скопійований текст у повідомленні клініці.'}</p>
-    </div>
+    <div className="request-intro"><h2 id="request-title">Обговорімо ваш візит</h2><p className="request-description">Залиште номер телефону, щоб узгодити з клінікою час прийому та поставити свої запитання.</p></div>
+    <ContactRequestForm/>
   </div></section>;
 }
 
@@ -123,7 +96,7 @@ function Contacts() {
 }
 
 function App() {
-  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><span aria-hidden="true">✳</span><span>ВІДНОВЛЕННЯ</span><span aria-hidden="true">✳</span><span>ОРТОДОНТІЯ</span><span aria-hidden="true">✳</span><span>ЕСТЕТИКА УСМІШКИ</span></div><Services/><Clinic/><RequestBuilder/><FAQ/><Contacts/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer></>;
+  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><span aria-hidden="true">✳</span><span>ВІДНОВЛЕННЯ</span><span aria-hidden="true">✳</span><span>ОРТОДОНТІЯ</span><span aria-hidden="true">✳</span><span>ЕСТЕТИКА УСМІШКИ</span></div><Services/><Clinic/><RequestForm/><FAQ/><Contacts/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer></>;
 }
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App/></StrictMode>);
