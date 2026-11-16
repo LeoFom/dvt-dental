@@ -8,7 +8,14 @@ const jsFile = html.match(/<script[^>]*src="([^"]+)"[^>]*><\/script>/)?.[1];
 const cssFile = html.match(/<link[^>]*href="([^"]+\.css)"[^>]*>/)?.[1];
 if (!jsFile || !cssFile) throw new Error('Build the application before exporting the preview.');
 let js = await readFile(path.join(dist, jsFile), 'utf8');
-const css = await readFile(path.join(dist, cssFile), 'utf8');
+let css = await readFile(path.join(dist, cssFile), 'utf8');
+for (const subset of ['cyrillic', 'latin']) {
+  const fontName = `unbounded-500-${subset}.woff2`;
+  const font = await readFile(path.join(dist, 'fonts', fontName));
+  const fontData = `data:font/woff2;base64,${font.toString('base64')}`;
+  css = css.replaceAll(`/fonts/${fontName}`, fontData);
+  html = html.replaceAll(`/fonts/${fontName}`, fontData);
+}
 for (const name of ['clinic', 'team', 'logo', 'hero-video-first', 'hero-video-last']) {
   const asset = await readFile(path.join(dist, 'images', `${name}.webp`));
   js = js.replaceAll(`./images/${name}.webp`, `data:image/webp;base64,${asset.toString('base64')}`);

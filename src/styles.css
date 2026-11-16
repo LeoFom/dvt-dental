@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/unbounded-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
   --color-paper: #f4f4ef;
   --color-ink: #222824;
@@ -7,6 +25,7 @@
   --color-line: #d7d9d0;
   --color-sage: #e5eacb;
   --font-sans: "Segoe UI", Arial, sans-serif;
+  --font-display: "Unbounded", "Segoe UI", Arial, sans-serif;
 }
 
 @layer base {
@@ -56,12 +75,8 @@
   .hero-video-toggle { position: absolute; right: 20px; bottom: 28px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--color-line); border-radius: 50%; background: var(--color-paper); color: var(--color-ink); transition: background-color .2s; }
   .hero-video-toggle:hover { background: var(--color-sage); }
   .hero-copy { position: relative; width: 50%; padding-top: 30px; }
-  .hero h1 { --hero-title-accent: #5d6f50; max-inline-size: 100%; font-size: clamp(52px, 5.8vw, 82px); font-weight: 550; line-height: 1.02; letter-spacing: -.055em; margin-top: 30px; }
-  .hero-title > span { display: block; }
-  .hero-title-intro { margin-bottom: .65em; color: var(--color-muted); font-size: clamp(24px, 2.4vw, 34px); font-weight: 400; line-height: 1.2; letter-spacing: -.035em; }
-  .hero-title-main { color: var(--color-ink); font-weight: 450; letter-spacing: -.06em; }
-  .hero-title-accent { position: relative; width: fit-content; max-inline-size: 100%; color: var(--hero-title-accent); font-family: Georgia, 'Times New Roman', serif; font-size: 1.24em; font-style: italic; font-weight: 400; line-height: 1.02; letter-spacing: -.055em; }
-  .hero-title-accent::after { content: ''; position: absolute; left: .04em; right: .1em; bottom: -.07em; height: .14em; border-bottom: 1.5px solid currentColor; border-radius: 0 0 50% 50%; opacity: .45; transform: rotate(-2deg); }
+  .hero h1 { max-inline-size: 9ch; font-family: var(--font-display); font-size: clamp(58px, 6.25vw, 90px); font-weight: 500; font-synthesis: none; line-height: 1.16; letter-spacing: -.055em; margin-top: 32px; }
+  .hero .eyebrow { font-size: 13px; font-weight: 450; letter-spacing: .02em; }
   .hero-description { font-size: 17px; color: var(--color-muted); line-height: 1.65; max-width: 360px; margin-top: 28px; }
   .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; margin-top: 32px; }
   .button { display: inline-flex; justify-content: space-between; align-items: center; gap: 24px; padding: 17px 23px; border: 1px solid transparent; border-radius: 4px; font-size: 14px; font-weight: 550; min-height: 54px; transition: background-color .2s, transform .2s; }
@@ -183,8 +198,8 @@
   .mobile-nav a { min-height: 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-line); }
   .hero { padding-block: 24px; }
   .hero-stage { min-height: 560px; }
-  .hero .eyebrow { font-size: 9px; letter-spacing: .8px; }
-  .hero h1 { font-size: clamp(44px, 6.4vw, 58px); }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0; }
+  .hero h1 { font-size: clamp(38px, 6.2vw, 50px); }
   .hero-copy { width: 54%; padding-top: 15px; }
   .hero-description { font-size: 14px; max-width: 265px; }
   .hero-portrait img, .hero-portrait video { object-position: 54% top; }
@@ -222,8 +237,8 @@
   .hero { padding-top: 24px; padding-bottom: 30px; }
   .hero-stage { display: flex; flex-direction: column; min-height: 0; }
   .hero-copy { width: 100%; padding: 0; }
-  .hero .eyebrow { font-size: 9px; letter-spacing: 1px; }
-  .hero h1 { font-size: clamp(46px, 14vw, 68px); margin-top: 24px; }
+  .hero .eyebrow { font-size: 12px; letter-spacing: 0; }
+  .hero h1 { font-size: clamp(38px, 11vw, 62px); margin-top: 26px; }
   .hero-description { font-size: 15px; max-width: 330px; margin-top: 20px; }
   .hero-actions { gap: 10px; margin-top: 22px; }
   .hero-actions .button { padding: 15px 12px; gap: 12px; font-size: 13px; }
