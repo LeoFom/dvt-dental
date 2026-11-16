@@ -44,15 +44,25 @@ function Header() {
 
 function Hero() {
   return <section className="hero wrap" aria-labelledby="hero-title">
-    <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> СТОМАТОЛОГІЯ В ІВАНО-ФРАНКІВСЬКУ</p>
-      <h1 id="hero-title">Здорові зуби.<br/><span>Впевнена</span><br/>усмішка.</h1>
-      <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
-      <div className="hero-actions"><a className="button button-dark" href="#contacts">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
-      <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
-    </div>
-    <div className="hero-image"><img src="./images/clinic.webp" width="512" height="640" alt="Стоматологічний кабінет DVT Denta: крісло, обладнання та робочий простір" fetchPriority="high"/>
-      <div className="image-index"><span>DVT DENTA</span><span>01 / КЛІНІКА</span></div>
-      <a className="image-note" href="#clinic"><span className="image-note-icon"><Icon name="tooth"/></span><span>Познайоммося ближче<strong>Ваш простір для турботи</strong></span><Icon name="arrow"/></a>
+    <div className="hero-stage">
+      <picture className="hero-portrait">
+        <img
+          src="./images/smile-1600.webp"
+          srcSet="./images/smile-800.webp 800w, ./images/smile-1600.webp 1600w, ./images/smile-2400.webp 2400w"
+          sizes="(max-width: 600px) 660px, (max-width: 1376px) calc(100vw - 56px), 1280px"
+          width="2752"
+          height="1536"
+          alt="Усміхнена жінка на світлому тлі"
+          fetchPriority="high"
+        />
+      </picture>
+      <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> СТОМАТОЛОГІЯ В ІВАНО-ФРАНКІВСЬКУ</p>
+        <h1 id="hero-title">Здорові зуби.<br/><span>Впевнена</span><br/>усмішка.</h1>
+        <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
+        <div className="hero-actions"><a className="button button-dark" href="#contacts">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
+        <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
+      </div>
+      <a className="hero-clinic-link" href="#clinic"><Icon name="tooth"/><span>ПОЗНАЙОММОСЯ БЛИЖЧЕ<strong>Про клініку DVT Denta</strong></span><Icon name="arrow"/></a>
     </div>
   </section>;
 }

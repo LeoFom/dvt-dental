@@ -9,7 +9,7 @@ const cssFile = html.match(/<link[^>]*href="([^"]+\.css)"[^>]*>/)?.[1];
 if (!jsFile || !cssFile) throw new Error('Build the application before exporting the preview.');
 let js = await readFile(path.join(dist, jsFile), 'utf8');
 const css = await readFile(path.join(dist, cssFile), 'utf8');
-for (const name of ['clinic', 'team', 'logo']) {
+for (const name of ['clinic', 'team', 'logo', 'smile-800', 'smile-1600', 'smile-2400']) {
   const asset = await readFile(path.join(dist, 'images', `${name}.webp`));
   js = js.replaceAll(`./images/${name}.webp`, `data:image/webp;base64,${asset.toString('base64')}`);
 }
