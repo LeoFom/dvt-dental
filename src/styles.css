@@ -92,7 +92,7 @@
   .hero-foot .icon { width: 18px; }
   .discipline-strip { border-block: 1px solid var(--color-line); padding-block: 26px; display: flex; justify-content: space-between; gap: 20px; font-size: 11px; letter-spacing: 1.3px; }
   .discipline-strip span:nth-child(even) { color: #6b8050; }
-  .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 24px; }
+  .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 24px; }
   .muted-title { color: #77806d; }
   .section-description { max-width: 340px; font-size: 14px; line-height: 1.8; color: var(--color-muted); }
   .services h2 { margin-bottom: 32px; font-family: var(--font-display); font-size: clamp(32px, 3.3vw, 46px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
@@ -109,15 +109,20 @@
   details summary .icon { width: 18px; transition: transform .2s; }
   .service-help { background: var(--color-sage); border-color: transparent; }
   .service-help .button { align-self: flex-start; margin-top: auto; min-height: 44px; padding: 9px 14px; }
-  .clinic-section { background: #e9ebe3; }
-  .clinic-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center; }
-  .clinic-main-photo { width: 100%; height: 520px; border-radius: 5px; object-position: center top; }
-  .clinic-copy { min-width: 0; }
-  .clinic-copy .eyebrow { font-size: 13px; font-weight: 450; letter-spacing: .02em; }
-  .clinic-copy h2 { max-inline-size: 14ch; font-family: var(--font-display); font-size: clamp(28px, 3vw, 40px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
-  .clinic-lead { font-size: 18px; line-height: 1.6; margin-top: 26px; }
-  .clinic-copy > p:not(.eyebrow):not(.clinic-lead) { color: var(--color-muted); font-size: 16px; line-height: 1.7; margin-top: 16px; }
-  .clinic-copy > .button { margin-top: 28px; }
+  .clinic-section { padding: 0; }
+  .clinic-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: 'photo intro' 'photo details'; column-gap: clamp(32px, 6vw, 88px); row-gap: 28px; padding-top: 72px; border-top: 1px solid var(--color-line); }
+  .clinic-intro { grid-area: intro; align-self: end; min-width: 0; }
+  .clinic-photos { grid-area: photo; align-self: center; min-width: 0; margin: 0; }
+  .clinic-main-photo { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 4px; object-position: center top; }
+  .clinic-intro h2 { max-inline-size: 17ch; font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
+  .clinic-intro h2 > span { white-space: nowrap; }
+  .clinic-lead { max-width: 48ch; color: var(--color-muted); font-size: 17px; line-height: 1.7; margin-top: 24px; text-wrap: pretty; }
+  .clinic-details { grid-area: details; align-self: start; min-width: 0; }
+  .clinic-topics { margin: 0; }
+  .clinic-topics > div { display: grid; grid-template-columns: minmax(0, 145px) minmax(0, 1fr); gap: 24px; padding-block: 18px; border-top: 1px solid var(--color-line); }
+  .clinic-topics dt { font-size: 16px; font-weight: 550; line-height: 1.6; }
+  .clinic-topics dd { margin: 0; color: var(--color-muted); font-size: 15px; line-height: 1.7; text-wrap: pretty; }
+  .clinic-details > .button { margin-top: 28px; }
   .request-card { padding: 56px; border: 1px solid var(--color-line); border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
   .request-card .section-description { margin-top: 24px; }
   .request-card > div > .text-link { margin-top: 26px; }
@@ -172,7 +177,7 @@
   .hero-actions { gap: 16px; }
   .desktop-nav { gap: 18px; }
   .header-call { font-size: 13px; }
-  .clinic-layout, .faq-section { gap: 44px; }
+  .faq-section { gap: 44px; }
   .request-card { padding: 36px; gap: 44px; }
   .service-card, .service-help { padding: 22px; }
   .service-card h3, .service-help h3 { font-size: 20px; }
@@ -200,10 +205,11 @@
   .section { padding-block: 68px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .section-description { font-size: 13px; max-width: 270px; }
-  .clinic-layout { gap: 30px; }
-  .clinic-main-photo { height: 500px; }
-  .clinic-copy h2 { font-size: 28px; }
-  .clinic-lead { font-size: 16px; }
+  .clinic-layout { grid-template-columns: 1fr; grid-template-areas: 'intro' 'photo' 'details'; gap: 28px; padding-top: 48px; }
+  .clinic-intro h2 { max-inline-size: 22ch; font-size: 34px; }
+  .clinic-lead { max-width: 56ch; font-size: 16px; margin-top: 20px; }
+  .clinic-main-photo { aspect-ratio: 3 / 2; }
+  .clinic-topics > div { grid-template-columns: minmax(0, 180px) minmax(0, 1fr); }
   .request-card { padding: 28px; gap: 30px; }
   .request-card h2 { font-size: 34px; }
   .faq-section { gap: 30px; }
@@ -241,12 +247,13 @@
   .section { padding-block: 56px; }
   h2 { font-size: 35px; letter-spacing: -1.5px; }
   .eyebrow { font-size: 9px; letter-spacing: 1.3px; }
-  .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 19px; }
+  .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 19px; }
   .services h2 { margin-bottom: 24px; font-size: clamp(28px, 7vw, 34px); }
   .services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; }
-  .clinic-layout { grid-template-columns: 1fr; gap: 33px; }
-  .clinic-main-photo { height: 420px; }
-  .clinic-copy h2 { font-size: clamp(28px, 7vw, 34px); }
+  .clinic-intro h2 { max-inline-size: 18ch; font-size: clamp(28px, 7vw, 34px); }
+  .clinic-main-photo { aspect-ratio: 1; }
+  .clinic-topics > div { grid-template-columns: 1fr; gap: 5px; padding-block: 16px; }
+  .clinic-details > .button { margin-top: 24px; }
   .request-card { grid-template-columns: 1fr; padding: 26px 22px; gap: 35px; }
   .request-card h2 { font-size: 37px; }
   .request-card .section-description { max-width: none; }

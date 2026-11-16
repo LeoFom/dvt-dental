@@ -68,10 +68,14 @@ function Clinic() {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     document.getElementById('request')?.focus({ preventScroll: true });
   }
-  return <section id="clinic" className="clinic-section section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
-    <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></div>
-    <div className="clinic-copy"><p className="eyebrow">Ближче до вас</p><h2 id="clinic-title">Почнімо з розмови</h2><p className="clinic-lead">Розкажіть, що вас турбує або що хочете змінити в усмішці.</p><p>На огляді обговоріть із лікарем варіанти лікування, етапи та вартість.</p>
-    <a className="button button-dark" href="#request" onClick={focusRequest}>Підготувати запит<Icon name="arrow"/></a></div>
+  return <section id="clinic" className="clinic-section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
+    <div className="clinic-intro"><h2 id="clinic-title">Перший візит до <span translate="no">DVT Denta</span></h2><p className="clinic-lead">Почніть з огляду, якщо ще не визначилися з лікуванням. На прийомі обговоріть із лікарем:</p></div>
+    <figure className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></figure>
+    <div className="clinic-details"><dl className="clinic-topics" aria-label="Що обговорити на першому огляді">
+      <div><dt>Ваш запит</dt><dd>Що вас турбує та що хочеться змінити в усмішці.</dd></div>
+      <div><dt>Можливі рішення</dt><dd>Які варіанти лікування можна розглянути у вашій ситуації.</dd></div>
+      <div><dt>План і вартість</dt><dd>Які етапи, строки та витрати передбачає лікування.</dd></div>
+    </dl><a className="button button-dark" href="#request" onClick={focusRequest}>Підготувати запит<Icon name="arrow"/></a></div>
   </div></section>;
 }
 
