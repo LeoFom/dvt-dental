@@ -64,11 +64,14 @@ function Services() {
 }
 
 function Clinic() {
-  return <section id="clinic" className="clinic-section section"><div className="wrap clinic-layout">
-    <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="360" height="640" loading="lazy" alt="Команда на фото з Instagram DVT Denta"/><div className="clinic-photo-caption"><span>DVT DENTA / ЗНАЙОМСТВО</span><a href={clinic.instagram} target="_blank" rel="noreferrer" aria-label="Instagram DVT Denta, у новій вкладці"><Icon name="instagram"/></a></div></div>
-    <div className="clinic-copy"><p className="eyebrow">БЛИЖЧЕ ДО ВАС</p><h2>Знайома клініка.<br/><span className="muted-title">Особиста розмова.</span></h2><p className="clinic-lead">Почніть із того, що важливо саме вам. Розкажіть про свої побажання до лікування.</p><p>Збереження зуба, відновлення усмішки чи корекція прикусу: обговоріть свою мету та можливі варіанти на прийомі.</p>
-    <div className="clinic-points"><div><p>Озвучте побажання<br/><strong>і те, що вас непокоїть</strong></p></div><div><p>Обговоріть план<br/><strong>й вартість до початку</strong></p></div><div><p>Уточніть етапи<br/><strong>та подальший догляд</strong></p></div></div>
-    <a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Більше про DVT в Instagram<Icon name="arrow"/></a></div>
+  function focusRequest(event: React.MouseEvent<HTMLAnchorElement>) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    document.getElementById('request')?.focus({ preventScroll: true });
+  }
+  return <section id="clinic" className="clinic-section section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
+    <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="360" height="640" loading="lazy" alt="Команда DVT Denta у клініці"/></div>
+    <div className="clinic-copy"><p className="eyebrow">Ближче до вас</p><h2 id="clinic-title">Почнімо з розмови</h2><p className="clinic-lead">Розкажіть, що вас турбує або що хочете змінити в усмішці.</p><p>На огляді обговоріть із лікарем варіанти лікування, етапи та вартість.</p>
+    <a className="button button-dark" href="#request" onClick={focusRequest}>Підготувати запит<Icon name="arrow"/></a></div>
   </div></section>;
 }
 
@@ -95,8 +98,8 @@ function RequestBuilder() {
     try { await navigator.clipboard.writeText(message); setCopyState('success'); }
     catch { setCopyState('error'); messageRef.current?.focus(); messageRef.current?.select(); }
   }
-  return <section id="request" tabIndex={-1} className="wrap section request-section"><div className="request-card">
-    <div><p className="eyebrow">ВАШ НАСТУПНИЙ КРОК</p><h2>Підготуйте запит<br/>до першого<br/><span className="muted-title">візиту.</span></h2><p className="section-description">Оберіть тему та скопіюйте запит для Instagram. Надішліть його самостійно, коли будете готові.</p><a className="text-link" href={clinic.phoneHref}>Або зателефонуйте {clinic.phone}<Icon name="phone"/></a></div>
+  return <section id="request" tabIndex={-1} className="wrap section request-section" aria-labelledby="request-title"><div className="request-card">
+    <div><p className="eyebrow">ВАШ НАСТУПНИЙ КРОК</p><h2 id="request-title">Підготуйте запит<br/>до першого<br/><span className="muted-title">візиту.</span></h2><p className="section-description">Оберіть тему та скопіюйте запит для Instagram. Надішліть його самостійно, коли будете готові.</p><a className="text-link" href={clinic.phoneHref}>Або зателефонуйте {clinic.phone}<Icon name="phone"/></a></div>
     <div className="message-builder"><label htmlFor="service">Про що хочете поговорити?</label><select id="service" name="service" value={selected} onChange={e => updateService(e.target.value)}><option value="">Хочу почати з огляду</option>{services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}</select><label htmlFor="message">Ваш текст для звернення</label><textarea ref={messageRef} id="message" name="message" value={message} readOnly rows={5} aria-describedby="copy-feedback"/><button type="button" className="button button-dark" onClick={copyMessage} disabled={copyState === 'pending'}>{copyState === 'pending' ? 'Копіюємо…' : copyState === 'success' ? 'Текст скопійовано' : 'Скопіювати текст'}<Icon name="arrow"/></button><p id="copy-feedback" className="copy-feedback" role="status">{copyState === 'success' ? 'Вставте текст у повідомлення @dvt_denta та надішліть його.' : copyState === 'error' ? 'Не вдалося скопіювати. Текст виділено — скопіюйте його вручну.' : 'Копіювання зберігає текст у буфері. Запит ще не надіслано.'}</p><a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Відкрити Instagram<Icon name="instagram"/></a></div>
   </div></section>;
 }
