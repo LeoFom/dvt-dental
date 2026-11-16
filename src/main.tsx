@@ -59,7 +59,7 @@ function Services() {
     <div className="services-grid">{services.map(service => <article className="service-card" key={service.id}>
       <div className="service-heading"><Icon name={service.icon}/><h3>{service.title}</h3></div><p>{service.description}</p>
     </article>)}
-    <article className="service-help"><h3>Почніть з огляду</h3><p>Узгодьте час телефоном.</p><a className="button button-dark" href={clinic.phoneHref}>Зателефонувати<Icon name="phone"/></a></article></div>
+    <article className="service-help"><h3>Почніть з огляду</h3><a className="button button-dark" href={clinic.phoneHref}>Зателефонувати<Icon name="phone"/></a></article></div>
   </section>;
 }
 
