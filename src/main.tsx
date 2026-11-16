@@ -69,7 +69,7 @@ function Clinic() {
     document.getElementById('request')?.focus({ preventScroll: true });
   }
   return <section id="clinic" className="clinic-section section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
-    <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="360" height="640" loading="lazy" alt="Команда DVT Denta у клініці"/></div>
+    <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></div>
     <div className="clinic-copy"><p className="eyebrow">Ближче до вас</p><h2 id="clinic-title">Почнімо з розмови</h2><p className="clinic-lead">Розкажіть, що вас турбує або що хочете змінити в усмішці.</p><p>На огляді обговоріть із лікарем варіанти лікування, етапи та вартість.</p>
     <a className="button button-dark" href="#request" onClick={focusRequest}>Підготувати запит<Icon name="arrow"/></a></div>
   </div></section>;
