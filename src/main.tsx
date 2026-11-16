@@ -49,7 +49,7 @@ function Hero() {
       <HeroVideo/>
       <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> СТОМАТОЛОГІЯ В ІВАНО-ФРАНКІВСЬКУ</p>
         <h1 id="hero-title" className="hero-title">
-          <span className="hero-title-intro">Здорові зуби.</span>{' '}
+          <span className="hero-title-intro">Здорові зуби</span>{' '}
           <span className="hero-title-main">Впевнена</span>{' '}
           <span className="hero-title-accent">усмішка</span>
         </h1>
