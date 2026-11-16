@@ -62,7 +62,6 @@ function Hero() {
         <div className="hero-actions"><a className="button button-dark" href="#contacts">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
         <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
       </div>
-      <a className="hero-clinic-link" href="#clinic"><Icon name="tooth"/><span>ПОЗНАЙОММОСЯ БЛИЖЧЕ<strong>Про клініку DVT Denta</strong></span><Icon name="arrow"/></a>
     </div>
   </section>;
 }
