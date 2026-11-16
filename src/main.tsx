@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { clinic, questions, services } from './content';
+import { HeroVideo } from './HeroVideo';
 import './styles.css';
 
 type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
@@ -45,17 +46,7 @@ function Header() {
 function Hero() {
   return <section className="hero wrap" aria-labelledby="hero-title">
     <div className="hero-stage">
-      <picture className="hero-portrait">
-        <img
-          src="./images/smile-1600.webp"
-          srcSet="./images/smile-800.webp 800w, ./images/smile-1600.webp 1600w, ./images/smile-2400.webp 2400w"
-          sizes="(max-width: 600px) 660px, (max-width: 1376px) calc(100vw - 56px), 1280px"
-          width="2752"
-          height="1536"
-          alt="Усміхнена жінка на світлому тлі"
-          fetchPriority="high"
-        />
-      </picture>
+      <HeroVideo/>
       <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> СТОМАТОЛОГІЯ В ІВАНО-ФРАНКІВСЬКУ</p>
         <h1 id="hero-title">Здорові зуби.<br/><span>Впевнена</span><br/>усмішка.</h1>
         <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
