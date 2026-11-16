@@ -4,10 +4,11 @@ import { clinic, questions, services } from './content';
 import { HeroVideo } from './HeroVideo';
 import './styles.css';
 
-type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
+type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross' | 'copy';
 function Icon({ name, className = '' }: { name: IconName | string; className?: string }) {
   const paths: Record<string, React.ReactNode> = {
     arrow: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
+    copy: <><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></>,
     phone: <path d="m8 3 3 5-3 3c1.5 2.5 3.5 4.5 6 6l3-3 4 3c-1 4-3 5-6 3C8 17 4 13 3 7c0-2 2-4 5-4Z" />,
     pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></>,
     plus: <path d="M12 5v14M5 12h14" />,
@@ -103,8 +104,13 @@ function RequestBuilder() {
     catch { setCopyState('error'); messageRef.current?.focus(); messageRef.current?.select(); }
   }
   return <section id="request" tabIndex={-1} className="wrap section request-section" aria-labelledby="request-title"><div className="request-card">
-    <div><p className="eyebrow">ВАШ НАСТУПНИЙ КРОК</p><h2 id="request-title">Підготуйте запит<br/>до першого<br/><span className="muted-title">візиту.</span></h2><p className="section-description">Оберіть тему та скопіюйте запит для Instagram. Надішліть його самостійно, коли будете готові.</p><a className="text-link" href={clinic.phoneHref}>Або зателефонуйте {clinic.phone}<Icon name="phone"/></a></div>
-    <div className="message-builder"><label htmlFor="service">Про що хочете поговорити?</label><select id="service" name="service" value={selected} onChange={e => updateService(e.target.value)}><option value="">Хочу почати з огляду</option>{services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}</select><label htmlFor="message">Ваш текст для звернення</label><textarea ref={messageRef} id="message" name="message" value={message} readOnly rows={5} aria-describedby="copy-feedback"/><button type="button" className="button button-dark" onClick={copyMessage} disabled={copyState === 'pending'}>{copyState === 'pending' ? 'Копіюємо…' : copyState === 'success' ? 'Текст скопійовано' : 'Скопіювати текст'}<Icon name="arrow"/></button><p id="copy-feedback" className="copy-feedback" role="status">{copyState === 'success' ? 'Вставте текст у повідомлення @dvt_denta та надішліть його.' : copyState === 'error' ? 'Не вдалося скопіювати. Текст виділено — скопіюйте його вручну.' : 'Копіювання зберігає текст у буфері. Запит ще не надіслано.'}</p><a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Відкрити Instagram<Icon name="instagram"/></a></div>
+    <div className="request-intro"><h2 id="request-title">Підготуйте запит</h2><p className="request-description">Оберіть тему звернення, скопіюйте готовий текст і надішліть його в Instagram клініки.</p><a className="request-phone" href={clinic.phoneHref}><Icon name="phone"/><span><span className="request-phone-label">Або зателефонуйте</span><span className="request-phone-number">{clinic.phone}</span></span></a></div>
+    <div className="message-builder">
+      <div className="request-field"><label htmlFor="service">Тема звернення</label><select id="service" name="service" autoComplete="off" value={selected} onChange={e => updateService(e.target.value)}><option value="">Хочу почати з огляду</option>{services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}</select></div>
+      <div className="request-field"><label htmlFor="message">Текст для Instagram</label><textarea ref={messageRef} id="message" name="message" autoComplete="off" value={message} readOnly rows={6} aria-describedby="message-hint copy-feedback"/><p id="message-hint" className="request-hint">Текст змінюється залежно від обраної теми.</p></div>
+      <div className="request-actions"><button type="button" className="button button-dark" onClick={copyMessage} disabled={copyState === 'pending'}>{copyState === 'pending' ? 'Копіюємо…' : copyState === 'success' ? 'Текст скопійовано' : 'Скопіювати текст'}<Icon name="copy"/></button><a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Відкрити Instagram<Icon name="instagram"/></a></div>
+      <p id="copy-feedback" className="copy-feedback" data-state={copyState} role="status">{copyState === 'success' ? 'Текст скопійовано. Відкрийте Instagram і вставте його в повідомлення клініці.' : copyState === 'error' ? 'Не вдалося скопіювати. Текст виділено — скопіюйте його вручну.' : 'Запит ще не надіслано. Надішліть скопійований текст у повідомленні клініці.'}</p>
+    </div>
   </div></section>;
 }
 
