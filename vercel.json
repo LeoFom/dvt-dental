@@ -3,5 +3,6 @@
   "framework": "vite",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "installCommand": "npx --yes pnpm@11.25.0 install --frozen-lockfile"
+  "installCommand": "npx --yes pnpm@11.25.0 install --frozen-lockfile",
+  "functions": { "api/contact.js": { "maxDuration": 15 } }
 }
