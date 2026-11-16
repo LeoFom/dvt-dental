@@ -92,27 +92,23 @@
   .hero-foot .icon { width: 18px; }
   .discipline-strip { border-block: 1px solid var(--color-line); padding-block: 26px; display: flex; justify-content: space-between; gap: 20px; font-size: 11px; letter-spacing: 1.3px; }
   .discipline-strip span:nth-child(even) { color: #6b8050; }
-  .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 46px; }
-  .section-heading .eyebrow, .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 24px; }
+  .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 24px; }
   .muted-title { color: #77806d; }
   .section-description { max-width: 340px; font-size: 14px; line-height: 1.8; color: var(--color-muted); }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
-  .service-card { background: #fbfbf7; border: 1px solid var(--color-line); padding: 26px; border-radius: 4px; min-height: 293px; }
-  .service-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 35px; color: var(--color-muted); font-size: 10px; }
-  .service-top > .icon { width: 30px; height: 30px; color: var(--color-ink); }
-  .service-card h3 { font-size: 22px; font-weight: 450; letter-spacing: -.6px; line-height: 1.3; }
-  .service-card > p { font-size: 13px; color: var(--color-muted); min-height: 68px; margin-top: 12px; max-width: 280px; }
+  .services h2 { margin-bottom: 32px; font-family: var(--font-display); font-size: clamp(32px, 3.3vw, 46px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 16px; }
+  .service-card, .service-help { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid var(--color-line); border-radius: 4px; }
+  .service-card { background: #fbfbf7; }
+  .service-heading { display: flex; align-items: flex-start; gap: 12px; }
+  .service-heading > .icon { width: 26px; height: 26px; }
+  .service-card h3, .service-help h3 { min-width: 0; font-size: 21px; font-weight: 500; letter-spacing: -.5px; line-height: 1.3; }
+  .service-card > p, .service-help > p { font-size: 14px; color: var(--color-muted); line-height: 1.6; }
   details summary { list-style: none; }
   details summary::-webkit-details-marker { display: none; }
-  .service-card summary { border-top: 1px solid var(--color-line); display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding-top: 11px; font-size: 12px; }
   details[open] summary > .icon { transform: rotate(45deg); }
   details summary .icon { width: 18px; transition: transform .2s; }
-  .service-detail { padding-top: 14px; font-size: 13px; color: var(--color-muted); }
-  .service-detail .text-link { color: var(--color-ink); margin-top: 9px; }
-  .service-help { padding: 28px; background: var(--color-sage); border-radius: 4px; min-height: 293px; }
-  .service-help h3 { font-size: 27px; line-height: 1.15; font-weight: 450; letter-spacing: -.7px; margin-top: 20px; }
-  .service-help p { font-size: 12px; margin-top: 12px; }
-  .service-help .button { margin-top: 22px; min-height: 44px; padding-block: 12px; width: 100%; }
+  .service-help { background: var(--color-sage); border-color: transparent; }
+  .service-help .button { align-self: flex-start; margin-top: auto; min-height: 44px; padding: 9px 14px; }
   .clinic-section { background: #e9ebe3; }
   .clinic-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center; }
   .clinic-photos { position: relative; }
@@ -123,8 +119,7 @@
   .clinic-lead { font-size: 18px; line-height: 1.6; margin-top: 26px; }
   .clinic-copy > p:not(.eyebrow):not(.clinic-lead) { color: var(--color-muted); font-size: 14px; line-height: 1.8; margin-top: 16px; }
   .clinic-points { margin: 25px 0 20px; }
-  .clinic-points > div { display: flex; align-items: start; gap: 17px; padding: 13px 0; border-top: 1px solid #ced2c6; }
-  .clinic-points > div > span { font-size: 10px; padding-top: 2px; color: var(--color-muted); }
+  .clinic-points > div { padding: 13px 0; border-top: 1px solid #ced2c6; }
   .clinic-points p { font-size: 12px; }
   .clinic-points strong { font-weight: 400; color: var(--color-muted); }
   .request-card { padding: 56px; border: 1px solid var(--color-line); border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
@@ -144,9 +139,8 @@
   .faq-list { border-top: 1px solid var(--color-line); }
   .faq-list details { border-bottom: 1px solid var(--color-line); }
   .faq-list summary { display: flex; align-items: center; gap: 20px; padding: 23px 0; }
-  .faq-number { color: var(--color-muted); font-size: 10px; }
   .faq-list h3 { font-size: 15px; line-height: 1.5; font-weight: 450; flex: 1; }
-  .faq-list details > p { margin: 0 38px 24px; font-size: 14px; color: var(--color-muted); line-height: 1.8; }
+  .faq-list details > p { margin: 0 0 24px; font-size: 14px; color: var(--color-muted); line-height: 1.8; }
   .contacts-section { background: var(--color-ink); color: var(--color-paper); }
   .contacts-section .eyebrow { color: #c1c9b8; }
   .contacts-heading { display: flex; justify-content: space-between; gap: 30px; align-items: center; margin-block: 28px 60px; }
@@ -184,8 +178,8 @@
   .header-call { font-size: 13px; }
   .clinic-layout, .faq-section { gap: 44px; }
   .request-card { padding: 36px; gap: 44px; }
-  .service-card { padding: 22px; }
-  .service-card h3 { font-size: 20px; }
+  .service-card, .service-help { padding: 22px; }
+  .service-card h3, .service-help h3 { font-size: 20px; }
 }
 @media (max-width: 800px) {
   .wrap { width: calc(100% - 40px); }
@@ -209,7 +203,6 @@
   .discipline-strip { font-size: 9px; gap: 10px; }
   .section { padding-block: 68px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
-  .section-heading { align-items: start; gap: 28px; }
   .section-description { font-size: 13px; max-width: 270px; }
   .clinic-layout { gap: 30px; }
   .clinic-main-photo { height: 500px; }
@@ -251,17 +244,10 @@
   .discipline-strip span:nth-child(4) { display: none; }
   .section { padding-block: 56px; }
   h2 { font-size: 35px; letter-spacing: -1.5px; }
-  .section-heading { display: block; margin-bottom: 28px; }
   .eyebrow { font-size: 9px; letter-spacing: 1.3px; }
-  .section-heading .eyebrow, .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 19px; }
-  .section-heading .section-description { margin-top: 21px; max-width: 330px; }
-  .services-grid { grid-template-columns: 1fr; gap: 12px; }
-  .service-card { padding: 24px; min-height: 255px; }
-  .service-top { margin-bottom: 26px; }
-  .service-card h3 { font-size: 23px; }
-  .service-card > p { min-height: 58px; max-width: 100%; }
-  .service-help { min-height: auto; padding: 26px; }
-  .service-help h3 { font-size: 31px; }
+  .clinic-copy .eyebrow, .request-card .eyebrow, .faq-section .eyebrow { margin-bottom: 19px; }
+  .services h2 { margin-bottom: 24px; font-size: clamp(28px, 7vw, 34px); }
+  .services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; }
   .clinic-layout { grid-template-columns: 1fr; gap: 33px; }
   .clinic-main-photo { height: 420px; }
   .clinic-copy h2 { font-size: 35px; }
@@ -279,7 +265,7 @@
   .faq-section .section-description { max-width: 300px; }
   .faq-list summary { gap: 14px; padding-block: 21px; }
   .faq-list h3 { font-size: 15px; }
-  .faq-list details > p { margin-left: 28px; margin-right: 10px; }
+  .faq-list details > p { margin-right: 10px; }
   .contacts-heading { align-items: end; margin-block: 26px 36px; gap: 12px; }
   .contacts-heading h2 { font-size: clamp(36px, 9.7vw, 52px); letter-spacing: -1.8px; }
   .round-arrow { width: 50px; height: 50px; flex: 0 0 50px; }

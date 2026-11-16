@@ -25,10 +25,6 @@ function Brand() {
   return <a className="brand" href="#top" aria-label="DVT Denta — на початок"><img src="./images/logo.webp" width="120" height="48" alt="DVT — стоматологія"/></a>;
 }
 
-function SectionHeading({ label, title, children }: { label: string; title: React.ReactNode; children?: React.ReactNode }) {
-  return <div className="section-heading"><div><p className="eyebrow">{label}</p><h2>{title}</h2></div>{children}</div>;
-}
-
 function Header() {
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -58,33 +54,20 @@ function Hero() {
 }
 
 function Services() {
-  function selectService(event: React.MouseEvent<HTMLAnchorElement>, id: string) {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-    event.preventDefault();
-    const url = new URL(window.location.href);
-    url.searchParams.set('service', id);
-    url.hash = 'request';
-    window.history.pushState(null, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-    const target = document.getElementById('request');
-    target?.scrollIntoView();
-    target?.focus({ preventScroll: true });
-  }
-  return <section id="services" className="wrap section services">
-    <SectionHeading label="01 / НАПРЯМИ ЛІКУВАННЯ" title={<>Для здоров’я.<br/><span className="muted-title">Для вашої усмішки.</span></>}><p className="section-description">Знайдіть напрям, який відповідає вашій потребі. Конкретний план лікування визначає лікар після огляду.</p></SectionHeading>
+  return <section id="services" className="wrap section services" aria-labelledby="services-title">
+    <h2 id="services-title">Напрями лікування</h2>
     <div className="services-grid">{services.map(service => <article className="service-card" key={service.id}>
-      <div className="service-top"><span>{service.number} / {service.tag}</span><Icon name={service.icon}/></div><h3>{service.title}</h3><p>{service.description}</p>
-      <details><summary>Про напрям<Icon name="plus"/></summary><div className="service-detail"><p>{service.detail}</p><a className="text-link" href={`?service=${service.id}#request`} onClick={event => selectService(event, service.id)}>Підготувати запит<Icon name="arrow"/></a></div></details>
+      <div className="service-heading"><Icon name={service.icon}/><h3>{service.title}</h3></div><p>{service.description}</p>
     </article>)}
-    <article className="service-help"><span className="eyebrow">ПОЧНІМО ЗІ ЗНАЙОМСТВА</span><h3>Почніть<br/>з огляду</h3><p>Розкажіть, що вас турбує.<br/>Уточніть наступний крок у клініки.</p><a className="button button-dark" href={clinic.phoneHref}>Зателефонувати<Icon name="phone"/></a></article></div>
+    <article className="service-help"><h3>Почніть з огляду</h3><p>Узгодьте час телефоном.</p><a className="button button-dark" href={clinic.phoneHref}>Зателефонувати<Icon name="phone"/></a></article></div>
   </section>;
 }
 
 function Clinic() {
   return <section id="clinic" className="clinic-section section"><div className="wrap clinic-layout">
     <div className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="360" height="640" loading="lazy" alt="Команда на фото з Instagram DVT Denta"/><div className="clinic-photo-caption"><span>DVT DENTA / ЗНАЙОМСТВО</span><a href={clinic.instagram} target="_blank" rel="noreferrer" aria-label="Instagram DVT Denta, у новій вкладці"><Icon name="instagram"/></a></div></div>
-    <div className="clinic-copy"><p className="eyebrow">02 / БЛИЖЧЕ ДО ВАС</p><h2>Знайома клініка.<br/><span className="muted-title">Особиста розмова.</span></h2><p className="clinic-lead">Почніть із того, що важливо саме вам. Розкажіть про свої побажання до лікування.</p><p>Збереження зуба, відновлення усмішки чи корекція прикусу: обговоріть свою мету та можливі варіанти на прийомі.</p>
-    <div className="clinic-points"><div><span>01</span><p>Озвучте побажання<br/><strong>і те, що вас непокоїть</strong></p></div><div><span>02</span><p>Обговоріть план<br/><strong>й вартість до початку</strong></p></div><div><span>03</span><p>Уточніть етапи<br/><strong>та подальший догляд</strong></p></div></div>
+    <div className="clinic-copy"><p className="eyebrow">БЛИЖЧЕ ДО ВАС</p><h2>Знайома клініка.<br/><span className="muted-title">Особиста розмова.</span></h2><p className="clinic-lead">Почніть із того, що важливо саме вам. Розкажіть про свої побажання до лікування.</p><p>Збереження зуба, відновлення усмішки чи корекція прикусу: обговоріть свою мету та можливі варіанти на прийомі.</p>
+    <div className="clinic-points"><div><p>Озвучте побажання<br/><strong>і те, що вас непокоїть</strong></p></div><div><p>Обговоріть план<br/><strong>й вартість до початку</strong></p></div><div><p>Уточніть етапи<br/><strong>та подальший догляд</strong></p></div></div>
     <a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Більше про DVT в Instagram<Icon name="arrow"/></a></div>
   </div></section>;
 }
@@ -113,17 +96,17 @@ function RequestBuilder() {
     catch { setCopyState('error'); messageRef.current?.focus(); messageRef.current?.select(); }
   }
   return <section id="request" tabIndex={-1} className="wrap section request-section"><div className="request-card">
-    <div><p className="eyebrow">03 / ВАШ НАСТУПНИЙ КРОК</p><h2>Підготуйте запит<br/>до першого<br/><span className="muted-title">візиту.</span></h2><p className="section-description">Оберіть тему та скопіюйте запит для Instagram. Надішліть його самостійно, коли будете готові.</p><a className="text-link" href={clinic.phoneHref}>Або зателефонуйте {clinic.phone}<Icon name="phone"/></a></div>
+    <div><p className="eyebrow">ВАШ НАСТУПНИЙ КРОК</p><h2>Підготуйте запит<br/>до першого<br/><span className="muted-title">візиту.</span></h2><p className="section-description">Оберіть тему та скопіюйте запит для Instagram. Надішліть його самостійно, коли будете готові.</p><a className="text-link" href={clinic.phoneHref}>Або зателефонуйте {clinic.phone}<Icon name="phone"/></a></div>
     <div className="message-builder"><label htmlFor="service">Про що хочете поговорити?</label><select id="service" name="service" value={selected} onChange={e => updateService(e.target.value)}><option value="">Хочу почати з огляду</option>{services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}</select><label htmlFor="message">Ваш текст для звернення</label><textarea ref={messageRef} id="message" name="message" value={message} readOnly rows={5} aria-describedby="copy-feedback"/><button type="button" className="button button-dark" onClick={copyMessage} disabled={copyState === 'pending'}>{copyState === 'pending' ? 'Копіюємо…' : copyState === 'success' ? 'Текст скопійовано' : 'Скопіювати текст'}<Icon name="arrow"/></button><p id="copy-feedback" className="copy-feedback" role="status">{copyState === 'success' ? 'Вставте текст у повідомлення @dvt_denta та надішліть його.' : copyState === 'error' ? 'Не вдалося скопіювати. Текст виділено — скопіюйте його вручну.' : 'Копіювання зберігає текст у буфері. Запит ще не надіслано.'}</p><a className="text-link" href={clinic.instagram} target="_blank" rel="noreferrer">Відкрити Instagram<Icon name="instagram"/></a></div>
   </div></section>;
 }
 
 function FAQ() {
-  return <section id="questions" className="wrap section faq-section"><div><p className="eyebrow">04 / ПЕРЕД ВІЗИТОМ</p><h2>Менше невідомого.<br/><span className="muted-title">Більше ясності.</span></h2><p className="section-description">Відповіді, що допоможуть підготуватися до першого звернення.</p></div><div className="faq-list">{questions.map((q, i) => <details key={q.title}><summary><span className="faq-number">0{i+1}</span><h3>{q.title}</h3><Icon name="plus"/></summary><p>{q.answer}</p></details>)}</div></section>;
+  return <section id="questions" className="wrap section faq-section"><div><p className="eyebrow">ПЕРЕД ВІЗИТОМ</p><h2>Менше невідомого.<br/><span className="muted-title">Більше ясності.</span></h2><p className="section-description">Відповіді, що допоможуть підготуватися до першого звернення.</p></div><div className="faq-list">{questions.map(q => <details key={q.title}><summary><h3>{q.title}</h3><Icon name="plus"/></summary><p>{q.answer}</p></details>)}</div></section>;
 }
 
 function Contacts() {
-  return <section id="contacts" className="contacts-section"><div className="wrap section"><p className="eyebrow">05 / ДО ЗУСТРІЧІ В DVT DENTA</p><div className="contacts-heading"><h2>Зробіть крок<br/>до своєї <span>усмішки.</span></h2><a className="round-arrow" href={clinic.phoneHref} aria-label={`Зателефонувати ${clinic.phone}`}><Icon name="arrow"/></a></div><div className="contacts-grid"><div><p className="contact-label">ЗАТЕЛЕФОНУЙТЕ</p><a className="contact-phone" href={clinic.phoneHref}>{clinic.phone}</a><p>Узгодьте час і вартість прийому.</p></div><div><p className="contact-label">ЗАВІТАЙТЕ</p><address>{clinic.city}<br/>{clinic.address}</address><a className="text-link" href={clinic.maps} target="_blank" rel="noreferrer">Прокласти маршрут<Icon name="arrow"/></a></div><div><p className="contact-label">НАПИШІТЬ</p><a className="instagram-handle" href={clinic.instagram} target="_blank" rel="noreferrer">@dvt_denta <Icon name="instagram"/></a><p>Час візиту та графік роботи<br/>уточніть під час звернення.</p></div></div></div></section>;
+  return <section id="contacts" className="contacts-section"><div className="wrap section"><p className="eyebrow">ДО ЗУСТРІЧІ В DVT DENTA</p><div className="contacts-heading"><h2>Зробіть крок<br/>до своєї <span>усмішки.</span></h2><a className="round-arrow" href={clinic.phoneHref} aria-label={`Зателефонувати ${clinic.phone}`}><Icon name="arrow"/></a></div><div className="contacts-grid"><div><p className="contact-label">ЗАТЕЛЕФОНУЙТЕ</p><a className="contact-phone" href={clinic.phoneHref}>{clinic.phone}</a><p>Узгодьте час і вартість прийому.</p></div><div><p className="contact-label">ЗАВІТАЙТЕ</p><address>{clinic.city}<br/>{clinic.address}</address><a className="text-link" href={clinic.maps} target="_blank" rel="noreferrer">Прокласти маршрут<Icon name="arrow"/></a></div><div><p className="contact-label">НАПИШІТЬ</p><a className="instagram-handle" href={clinic.instagram} target="_blank" rel="noreferrer">@dvt_denta <Icon name="instagram"/></a><p>Час візиту та графік роботи<br/>уточніть під час звернення.</p></div></div></div></section>;
 }
 
 function App() {
