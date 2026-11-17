@@ -304,6 +304,7 @@
   .clinic-intro h2 { max-inline-size: 18ch; font-size: clamp(28px, 7vw, 34px); }
   .clinic-main-photo { aspect-ratio: 1; }
   .clinic-topics > div { grid-template-columns: 1fr; gap: 5px; padding-block: 16px; }
+  .clinic-topics > div:first-child { border-top: 0; padding-top: 0; }
   .request-intro h2 { font-size: clamp(28px, 7vw, 34px); }
   .request-card { padding: 24px; }
   .request-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
