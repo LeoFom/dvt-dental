@@ -1,3 +1,15 @@
+import { services } from './services.js';
+
+export const defaultCategoryId = 'consultation';
+export const requestCategories = [
+  { id: defaultCategoryId, title: 'Потрібна консультація' },
+  ...services.map(({ id, title }) => ({ id, title })),
+];
+
+export function normalizeCategory(value) {
+  return requestCategories.find(category => category.id === (value === undefined ? defaultCategoryId : value)) ?? null;
+}
+
 export function normalizePhone(value) {
   if (typeof value !== 'string' || value.length > 40) return null;
   const compact = value.trim().replace(/[\s().-]/g, '');

@@ -2,7 +2,7 @@ import { StrictMode, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { clinic, questions, services } from './content';
 import { HeroVideo } from './HeroVideo';
-import { ContactRequestForm } from './ContactRequestForm';
+import { ContactRequestModal, type OpenRequest, type RequestModalHandle } from './ContactRequestModal';
 import './styles.css';
 
 type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
@@ -40,35 +40,32 @@ function Header() {
   </nav> : null}</header>;
 }
 
-function Hero() {
+function Hero({ onRequest }: { onRequest: OpenRequest }) {
   return <section className="hero wrap" aria-labelledby="hero-title">
     <div className="hero-stage">
       <HeroVideo/>
       <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">Здорова усмішка</h1>
         <p className="hero-description">Лікуємо й відновлюємо зуби, вирівнюємо прикус. Почніть з огляду та плану лікування.</p>
-        <div className="hero-actions"><a className="button button-dark" href="#request">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
+        <div className="hero-actions"><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
         <a className="hero-foot" href={clinic.maps} target="_blank" rel="noreferrer" aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><span className="hero-location-arrow" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>;
 }
 
-function Services() {
+function Services({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="services" className="wrap section services" aria-labelledby="services-title">
     <h2 id="services-title">Напрями лікування</h2>
     <div className="services-grid">{services.map(service => <article className="service-card" key={service.id}>
-      <div className="service-heading"><Icon name={service.icon}/><h3>{service.title}</h3></div><p>{service.description}</p>
+      <div className="service-heading"><Icon name={service.icon}/><h3 id={`service-${service.id}-title`}>{service.title}</h3></div><p id={`service-${service.id}-description`}>{service.description}</p>
+      <button type="button" className="service-select" onClick={() => onRequest(service.id)} aria-labelledby={`service-${service.id}-title`} aria-describedby={`service-${service.id}-description`} aria-haspopup="dialog" aria-controls="request-dialog"><span className="service-card-arrow"><Icon name="arrow"/></span></button>
     </article>)}
-    <article className="service-help"><h3>Почніть з огляду</h3><a className="button button-dark" href={clinic.phoneHref}>Зателефонувати<Icon name="phone"/></a></article></div>
+    <article className="service-help"><h3 id="service-consultation-title">Почніть з огляду</h3><p id="service-consultation-description">Допоможемо визначити, який напрям лікування вам потрібен.</p><button type="button" className="service-select" onClick={() => onRequest()} aria-labelledby="service-consultation-title" aria-describedby="service-consultation-description" aria-haspopup="dialog" aria-controls="request-dialog"><span className="service-card-arrow"><Icon name="arrow"/></span></button></article></div>
   </section>;
 }
 
-function Clinic() {
-  function focusRequest(event: React.MouseEvent<HTMLAnchorElement>) {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-    document.getElementById('request')?.focus({ preventScroll: true });
-  }
+function Clinic({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="clinic" className="clinic-section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
     <div className="clinic-intro"><h2 id="clinic-title">Перший візит до <span translate="no">DVT Denta</span></h2><p className="clinic-lead">Почніть з огляду. На прийомі обговоріть із лікарем:</p></div>
     <figure className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></figure>
@@ -76,41 +73,43 @@ function Clinic() {
       <div><dt>Ваш запит</dt><dd>Що вас турбує та що хочеться змінити в усмішці.</dd></div>
       <div><dt>Можливі рішення</dt><dd>Які варіанти лікування можна розглянути у вашій ситуації.</dd></div>
       <div><dt>План і вартість</dt><dd>Які етапи, строки та витрати передбачає лікування.</dd></div>
-    </dl><a className="button button-dark" href="#request" onClick={focusRequest}>Залишити заявку<Icon name="arrow"/></a></div>
+    </dl><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button></div>
   </div></section>;
 }
 
-function RequestForm() {
+function RequestInvitation({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="request" tabIndex={-1} className="wrap section request-section" aria-labelledby="request-title"><div className="request-card">
     <div className="request-intro"><h2 id="request-title">Обговорімо ваш візит</h2><p className="request-description">Залиште номер телефону, щоб узгодити час прийому та поставити свої запитання.</p></div>
-    <ContactRequestForm/>
+    <button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button>
   </div></section>;
 }
 
-function FAQ() {
+function FAQ({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="questions" className="wrap section faq-section" aria-labelledby="questions-title">
     <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p></div>
     <div className="faq-list">{questions.map(q => <details key={q.id} id={`faq-${q.id}`} open={q.id === 'cost'}>
       <summary><h3>{q.title}</h3><span className="faq-toggle" aria-hidden="true"/></summary>
-      <div className="faq-answer"><p>{q.answer}</p>{q.action ? <a className="text-link" href={q.action.href}>{q.action.label}<Icon name="arrow"/></a> : null}</div>
+      <div className="faq-answer"><p>{q.answer}</p>{q.action ? <button type="button" className="text-link" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">{q.action.label}<Icon name="arrow"/></button> : null}</div>
     </details>)}</div>
   </section>;
 }
 
-function Contacts() {
+function Contacts({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="contacts" className="contacts-section" aria-labelledby="contacts-title"><div className="wrap section contacts-layout">
     <div className="contacts-info"><h2 id="contacts-title">Як нас знайти</h2>
       <address className="contacts-address"><span className="contact-street">{clinic.address}</span><span className="contact-locality">{clinic.mapLocality}</span></address>
       <a className="button contacts-route" href={clinic.directions} target="_blank" rel="noreferrer" aria-label="Прокласти маршрут у Google Maps, у новій вкладці">Прокласти маршрут<Icon name="arrow"/></a>
       <div className="contacts-phone"><p className="contact-label">Телефон</p><a className="contact-phone" href={clinic.phoneHref}>{clinic.phone}</a><p className="contacts-note">Час візиту узгодьте заздалегідь.</p></div>
-      <a className="text-link contacts-request" href="#request">Залишити заявку<Icon name="arrow"/></a>
+      <button type="button" className="text-link contacts-request" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button>
     </div>
     <div className="contacts-map"><div className="contacts-map-frame"><iframe title="Карта: стоматологія DVT на вулиці Олександра Довженка, 31" src={clinic.mapEmbed} width="800" height="500" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/></div><a className="text-link contacts-map-link" href={clinic.maps} target="_blank" rel="noreferrer" aria-label="Відкрити картку DVT у Google Maps, у новій вкладці">Відкрити Google Maps<Icon name="arrow"/></a></div>
   </div></section>;
 }
 
 function App() {
-  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><span aria-hidden="true">✳</span><span>ВІДНОВЛЕННЯ</span><span aria-hidden="true">✳</span><span>ОРТОДОНТІЯ</span><span aria-hidden="true">✳</span><span>ЕСТЕТИКА УСМІШКИ</span></div><Services/><Clinic/><RequestForm/><FAQ/><Contacts/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer></>;
+  const requestRef = useRef<RequestModalHandle>(null);
+  const openRequest: OpenRequest = category => requestRef.current?.open(category);
+  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero onRequest={openRequest}/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><span aria-hidden="true">✳</span><span>ВІДНОВЛЕННЯ</span><span aria-hidden="true">✳</span><span>ОРТОДОНТІЯ</span><span aria-hidden="true">✳</span><span>ЕСТЕТИКА УСМІШКИ</span></div><Services onRequest={openRequest}/><Clinic onRequest={openRequest}/><RequestInvitation onRequest={openRequest}/><FAQ onRequest={openRequest}/><Contacts onRequest={openRequest}/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer><ContactRequestModal ref={requestRef}/></>;
 }
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App/></StrictMode>);

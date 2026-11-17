@@ -31,6 +31,7 @@ test('rejects method, content type, cross-origin and malformed input before call
     [request({ ...data, phone: '+38099123456' }), 422],
     [request({ ...data, name: 'x'.repeat(81) }), 422],
     [request({ ...data, name: 'Name\nForged entry' }), 422],
+    ...['', null, 123, {}, [], 'unknown', '__proto__', 'implants\nForged entry'].map(category => [request({ ...data, category }), 422]),
     [request('x'.repeat(2049)), 413],
     [request(data, { 'Content-Length': '4096' }), 413],
   ];
@@ -52,6 +53,7 @@ test('sends only normalized, bounded plain-text contact fields to the configured
     assert.equal(message.parse_mode, undefined);
     assert.ok(message.text.includes('Мар’яна-Олена'));
     assert.ok(message.text.includes('+380991234567'));
+    assert.ok(message.text.includes('Напрям: Потрібна консультація'));
     return Response.json(delivered);
   });
   const response = await result.json();
@@ -64,6 +66,30 @@ test('sends only normalized, bounded plain-text contact fields to the configured
     return Response.json(delivered);
   });
   assert.equal((await run(request({ phone: data.phone, website: '' }))).status, 200);
+});
+
+test('delivers each selected treatment as its trusted label and defaults for older clients', async () => {
+  for (const [category, label] of [
+    ['consultation', 'Потрібна консультація'],
+    ['treatment', 'Лікування зубів'],
+    ['implants', 'Імплантація'],
+    ['crowns', 'Коронки та вініри'],
+    ['ortho', 'Брекети та елайнери'],
+    ['surgery', 'Хірургія та видалення'],
+    [undefined, 'Потрібна консультація'],
+  ]) {
+    let calls = 0;
+    const result = await run(request({ ...data, name: '', category, categoryTitle: 'Injected title' }), async (_, options) => {
+      calls++;
+      const { text } = JSON.parse(options.body);
+      assert.ok(text.includes(`Напрям: ${label}\n`));
+      assert.ok(text.includes('Ім’я: Не вказано'));
+      assert.ok(!text.includes('Injected title'));
+      return Response.json(delivered);
+    });
+    assert.equal(result.status, 200);
+    assert.equal(calls, 1);
+  }
 });
 
 test('never reports success without provider acknowledgement and correct recipient', async () => {

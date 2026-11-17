@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { normalizePhone } from '../shared/contact.js';
+import { normalizeCategory, normalizePhone } from '../shared/contact.js';
 
 const maxBodyBytes = 2048;
 function reply(status, body, headers = {}) {
@@ -45,13 +45,15 @@ export async function handleContact(request, { env = process.env, fetchImpl = fe
   const rawName = data.name ?? '';
   if (typeof rawName !== 'string' || rawName.length > 80 || /[\u0000-\u001f\u007f]/.test(rawName)) return reply(422, { ok: false, field: 'name' });
   const name = rawName.trim();
+  const category = normalizeCategory(data.category);
+  if (!category) return reply(422, { ok: false, field: 'category' });
   const token = env.TELEGRAM_BOT_TOKEN;
   const chatId = env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return reply(503, { ok: false });
 
   const requestId = randomUUID();
   const receivedAt = new Intl.DateTimeFormat('uk-UA', { timeZone: 'Europe/Kyiv', dateStyle: 'short', timeStyle: 'short' }).format(new Date());
-  const text = `Нова заявка з сайту DVT Denta\n\nІм’я: ${name || 'Не вказано'}\nТелефон: ${phone}\n\nЧас: ${receivedAt}\nЗаявка: ${requestId}`;
+  const text = `Нова заявка з сайту DVT Denta\n\nІм’я: ${name || 'Не вказано'}\nТелефон: ${phone}\nНапрям: ${category.title}\n\nЧас: ${receivedAt}\nЗаявка: ${requestId}`;
   try {
     const response = await fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
