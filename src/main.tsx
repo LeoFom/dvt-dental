@@ -5,10 +5,11 @@ import { HeroVideo } from './HeroVideo';
 import { ContactRequestModal, type OpenRequest, type RequestModalHandle } from './ContactRequestModal';
 import './styles.css';
 
-type IconName = 'arrow' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
+type IconName = 'arrow' | 'asterisk' | 'phone' | 'pin' | 'plus' | 'instagram' | 'tooth' | 'implant' | 'spark' | 'align' | 'cross';
 function Icon({ name, className = '' }: { name: IconName | string; className?: string }) {
   const paths: Record<string, React.ReactNode> = {
-    arrow: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
+    arrow: <g transform="rotate(-45 12 12)"><path d="M5 12h14M13 6l6 6-6 6" /></g>,
+    asterisk: <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4 18.4 5.6" />,
     phone: <path d="m8 3 3 5-3 3c1.5 2.5 3.5 4.5 6 6l3-3 4 3c-1 4-3 5-6 3C8 17 4 13 3 7c0-2 2-4 5-4Z" />,
     pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></>,
     plus: <path d="M12 5v14M5 12h14" />,
@@ -48,9 +49,9 @@ function Hero({ onRequest }: { onRequest: OpenRequest }) {
       <HeroVideo onIntroReady={reveal}/>
       <div className="hero-copy" inert={intro === 'waiting'} onFocusCapture={() => setIntro('complete')}>
         <h1 id="hero-title" className="hero-title"><span className="hero-reveal">Здорова</span>{' '}<span className="hero-reveal">усмішка</span></h1>
-        <p className="hero-description hero-reveal">Лікуємо й відновлюємо зуби, вирівнюємо прикус. Почніть з огляду та плану лікування.</p>
-        <div className="hero-actions"><button type="button" className="button button-dark hero-reveal" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link hero-reveal" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
-        <a className="hero-foot hero-reveal" href={clinic.maps} target="_blank" rel="noreferrer" onAnimationEnd={() => setIntro('complete')} aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><span className="hero-location-arrow" aria-hidden="true">↗</span></a>
+        <p className="hero-description hero-reveal">Лікування й відновлення зубів. Корекція прикусу.</p>
+        <div className="hero-actions"><button type="button" className="button button-dark hero-reveal" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link hero-reveal" href="#services">Обрати послугу<Icon name="arrow"/></a></div>
+        <a className="hero-foot hero-reveal" href={clinic.maps} target="_blank" rel="noreferrer" onAnimationEnd={() => setIntro('complete')} aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><Icon name="arrow" className="hero-location-arrow"/></a>
       </div>
     </div>
   </section>;
@@ -111,7 +112,7 @@ function Contacts({ onRequest }: { onRequest: OpenRequest }) {
 function App() {
   const requestRef = useRef<RequestModalHandle>(null);
   const openRequest: OpenRequest = category => requestRef.current?.open(category);
-  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero onRequest={openRequest}/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><span aria-hidden="true">✳</span><span>ВІДНОВЛЕННЯ</span><span aria-hidden="true">✳</span><span>ОРТОДОНТІЯ</span><span aria-hidden="true">✳</span><span>ЕСТЕТИКА УСМІШКИ</span></div><Services onRequest={openRequest}/><Clinic onRequest={openRequest}/><RequestInvitation onRequest={openRequest}/><FAQ onRequest={openRequest}/><Contacts onRequest={openRequest}/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer><ContactRequestModal ref={requestRef}/></>;
+  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero onRequest={openRequest}/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ВІДНОВЛЕННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ОРТОДОНТІЯ</span><Icon name="asterisk" className="discipline-star"/><span>ЕСТЕТИКА УСМІШКИ</span></div><Services onRequest={openRequest}/><Clinic onRequest={openRequest}/><RequestInvitation onRequest={openRequest}/><FAQ onRequest={openRequest}/><Contacts onRequest={openRequest}/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer><ContactRequestModal ref={requestRef}/></>;
 }
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App/></StrictMode>);
