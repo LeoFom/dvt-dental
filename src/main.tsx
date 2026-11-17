@@ -51,7 +51,7 @@ function Hero({ onRequest }: { onRequest: OpenRequest }) {
         <h1 id="hero-title" className="hero-title"><span className="hero-reveal">Здорова</span>{' '}<span className="hero-reveal">усмішка</span></h1>
         <p className="hero-description hero-reveal">Лікування й відновлення зубів. Корекція прикусу.</p>
         <div className="hero-actions"><button type="button" className="button button-dark hero-reveal" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link hero-reveal" href="#services">Обрати послугу<Icon name="arrow"/></a></div>
-        <a className="hero-foot hero-reveal" href={clinic.maps} target="_blank" rel="noreferrer" onAnimationEnd={() => setIntro('complete')} aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><Icon name="arrow" className="hero-location-arrow"/></a>
+        <a className="hero-foot hero-reveal" href={clinic.maps} target="_blank" rel="noreferrer" onAnimationEnd={() => setIntro('complete')} aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><span className="hero-location-city">{clinic.city}<Icon name="pin"/></span>{' '}<span className="hero-location-street">{clinic.address.replace(', ', ',\u00a0')}</span></a>
       </div>
     </div>
   </section>;

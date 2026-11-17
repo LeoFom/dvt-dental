@@ -88,13 +88,12 @@
   .text-link:hover { text-decoration: underline; }
   button.text-link { padding: 0; border: 0; background: transparent; color: inherit; text-align: left; }
   .text-link .icon { width: 18px; height: 18px; }
-  .hero-foot { display: flex; gap: 12px; align-items: center; width: fit-content; max-width: 100%; min-height: 44px; padding: 6px 8px 6px 0; border-radius: 4px; color: var(--color-muted); font-size: 11px; margin-top: 48px; transition: background-color .2s; }
-  .hero-foot:hover { background: rgb(229 234 203 / .5); }
-  .hero-foot:hover strong { text-decoration: underline; text-underline-offset: 4px; }
-  .hero-foot strong { font-weight: 400; color: var(--color-ink); font-size: 12px; }
-  .hero-foot .icon { width: 18px; }
-  .hero-location-arrow { margin-left: 4px; color: var(--color-ink); }
-  .hero-foot .hero-location-arrow { width: 18px; height: 18px; }
+  .hero-foot { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; width: fit-content; max-width: 100%; min-height: 44px; padding: 6px 8px 6px 0; border-radius: 4px; color: var(--color-muted); margin-top: 48px; transition: color .2s; }
+  .hero-location-city { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; line-height: 1.6; }
+  .hero-location-city .icon { width: 13px; height: 13px; }
+  .hero-location-street { min-width: 0; color: var(--color-ink); font-size: 13px; line-height: 1.55; text-decoration: underline; text-decoration-color: #b2b8a6; text-underline-offset: 4px; text-decoration-thickness: 1px; transition: text-decoration-color .2s; }
+  .hero-foot:hover { color: var(--color-ink); }
+  .hero-foot:hover .hero-location-street { text-decoration-color: var(--color-ink); }
   .hero-title .hero-reveal { display: block; }
   .hero-reveal { --reveal-step: 0; }
   .hero-title .hero-reveal:last-child { --reveal-step: 1; }
@@ -291,10 +290,7 @@
   .hero-actions .button { min-height: 46px; padding: 12px 9px; gap: 8px; font-size: 12px; white-space: nowrap; }
   .hero-actions .button .icon { width: 16px; height: 16px; }
   .hero-actions .text-link { display: none; }
-  .hero-foot { display: grid; grid-template-columns: 14px minmax(0, 1fr) 14px; gap: 8px; align-items: start; width: 168px; padding-right: 6px; margin-top: 20px; }
-  .hero-foot > span { min-width: 0; }
-  .hero-foot > .icon { width: 14px; height: 18px; margin-top: 2px; }
-  .hero-foot > .hero-location-arrow { align-self: end; width: 14px; height: 14px; margin: 0 0 2px; }
+  .hero-foot { max-width: 190px; margin-top: 20px; }
   .hero-foot.hero-reveal { --reveal-step: 4; }
   .hero-portrait { --mobile-media-height: min(330px, calc((100vw - 36px) * .8)); position: absolute; inset: 0 0 auto; height: var(--mobile-media-height); z-index: -1; transform-origin: center top; transform: translate3d(calc(min(24%, calc(50% - var(--mobile-media-height) * .32 - 12px)) + clamp(12px, 4vw, 20px)), 110px, 0); transition: transform .85s cubic-bezier(.2,.7,.2,1); mask-image: linear-gradient(to right, transparent, #000 8px); }
   .hero-stage[data-intro='waiting'] .hero-portrait { transform: translate3d(-9px, 24px, 0) scale(1.2); }
