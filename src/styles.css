@@ -19,7 +19,7 @@
 }
 
 @theme {
-  --color-paper: #f4f4ef;
+  --color-paper: #efeeea;
   --color-ink: #222824;
   --color-muted: #646960;
   --color-line: #d7d9d0;
@@ -52,7 +52,7 @@
   .wrap { width: min(1280px, calc(100% - 96px)); margin-inline: auto; }
   .section { padding-block: var(--section-space); }
   .icon { flex: 0 0 auto; }
-  .header { position: sticky; top: 0; z-index: 20; background: rgb(244 244 239 / .97); border-bottom: 1px solid var(--color-line); }
+  .header { position: sticky; top: 0; z-index: 20; background: rgb(239 238 234 / .97); border-bottom: 1px solid var(--color-line); }
   .header-inner { height: var(--header-height); display: flex; align-items: center; justify-content: space-between; gap: 30px; }
   .brand { display: inline-flex; flex-direction: column; width: fit-content; min-height: 44px; justify-content: center; }
   .brand > img { width: 120px; height: 48px; object-fit: contain; mix-blend-mode: multiply; }
