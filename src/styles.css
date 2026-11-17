@@ -29,6 +29,7 @@
 }
 
 @layer base {
+  :root { --section-space: 100px; }
   html { scroll-behavior: smooth; scroll-padding-top: 100px; }
   body { @apply bg-paper text-ink font-sans antialiased; margin: 0; font-size: 16px; line-height: 1.55; }
   * { box-sizing: border-box; }
@@ -47,7 +48,7 @@
 
 @layer components {
   .wrap { width: min(1280px, calc(100% - 96px)); margin-inline: auto; }
-  .section { padding-block: 100px; }
+  .section { padding-block: var(--section-space); }
   .icon { flex: 0 0 auto; }
   .header { position: sticky; top: 0; z-index: 20; background: rgb(244 244 239 / .97); border-bottom: 1px solid var(--color-line); }
   .header-inner { height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
@@ -63,8 +64,6 @@
   .header-call { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 15px; font-weight: 550; }
   .header-call .icon { width: 18px; }
   .menu-button { display: none; border: 0; background: transparent; }
-  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.55px; line-height: 1.6; display: flex; align-items: center; gap: 9px; }
-  .status-dot { width: 6px; height: 6px; background: #6b8050; border-radius: 50%; }
   .hero { padding-top: 42px; padding-bottom: 48px; }
   .hero-stage { position: relative; isolation: isolate; min-height: 610px; background: transparent; }
   .hero-portrait { --hero-edge-fade: 12px; position: absolute; inset: 0; z-index: -1; display: block; mask-image: linear-gradient(to right, transparent 36%, #000 54%, #000 calc(100% - var(--hero-edge-fade)), transparent); }
@@ -74,9 +73,8 @@
   .hero-portrait.is-still video { visibility: hidden; }
   .hero-video-toggle { position: absolute; right: 20px; bottom: 28px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--color-line); border-radius: 50%; background: var(--color-paper); color: var(--color-ink); transition: background-color .2s; }
   .hero-video-toggle:hover { background: var(--color-sage); }
-  .hero-copy { position: relative; width: 50%; padding-top: 30px; }
-  .hero h1 { max-inline-size: 9ch; font-family: var(--font-display); font-size: clamp(58px, 6.25vw, 90px); font-weight: 500; font-synthesis: none; line-height: 1.16; letter-spacing: -.055em; margin-top: 32px; }
-  .hero .eyebrow { font-size: 13px; font-weight: 450; letter-spacing: .02em; }
+  .hero-copy { position: relative; width: 50%; padding-top: 64px; }
+  .hero h1 { max-inline-size: 9ch; font-family: var(--font-display); font-size: clamp(58px, 6.25vw, 90px); font-weight: 500; font-synthesis: none; line-height: 1.16; letter-spacing: -.055em; }
   .hero-description { font-size: 17px; color: var(--color-muted); line-height: 1.65; max-width: 360px; margin-top: 28px; }
   .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; margin-top: 32px; }
   .button { display: inline-flex; justify-content: space-between; align-items: center; gap: 24px; padding: 17px 23px; border: 1px solid transparent; border-radius: 4px; font-size: 14px; font-weight: 550; min-height: 54px; transition: background-color .2s, transform .2s; }
@@ -87,21 +85,24 @@
   .text-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; font-size: 13px; font-weight: 550; text-underline-offset: 5px; }
   .text-link:hover { text-decoration: underline; }
   .text-link .icon { width: 18px; height: 18px; }
-  .hero-foot { display: flex; gap: 12px; align-items: center; color: var(--color-muted); font-size: 11px; margin-top: 48px; }
+  .hero-foot { display: flex; gap: 12px; align-items: center; width: 100%; min-height: 44px; padding-block: 6px; border-radius: 4px; color: var(--color-muted); font-size: 11px; margin-top: 48px; transition: background-color .2s; }
+  .hero-foot:hover { background: rgb(229 234 203 / .5); }
+  .hero-foot:hover strong { text-decoration: underline; text-underline-offset: 4px; }
   .hero-foot strong { font-weight: 400; color: var(--color-ink); font-size: 12px; }
   .hero-foot .icon { width: 18px; }
+  .hero-location-arrow { margin-left: 4px; color: var(--color-ink); font-size: 16px; }
   .discipline-strip { border-block: 1px solid var(--color-line); padding-block: 26px; display: flex; justify-content: space-between; gap: 20px; font-size: 11px; letter-spacing: 1.3px; }
   .discipline-strip span:nth-child(even) { color: #6b8050; }
   .muted-title { color: #77806d; }
   .section-description { max-width: 340px; font-size: 14px; line-height: 1.8; color: var(--color-muted); }
   .services h2 { margin-bottom: 32px; font-family: var(--font-display); font-size: clamp(32px, 3.3vw, 46px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
   .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 16px; }
-  .service-card, .service-help { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid var(--color-line); border-radius: 4px; }
+  .service-card, .service-help { min-width: 0; min-height: 208px; display: flex; flex-direction: column; gap: 16px; padding: 26px; border: 1px solid var(--color-line); border-radius: 4px; }
   .service-card { background: #fbfbf7; }
   .service-heading { display: flex; align-items: flex-start; gap: 12px; }
   .service-heading > .icon { width: 26px; height: 26px; }
   .service-card h3, .service-help h3 { min-width: 0; font-size: 21px; font-weight: 500; letter-spacing: -.5px; line-height: 1.3; }
-  .service-card > p, .service-help > p { font-size: 14px; color: var(--color-muted); line-height: 1.6; }
+  .service-card > p, .service-help > p { font-size: 14px; color: var(--color-muted); line-height: 1.7; text-wrap: pretty; }
   details summary { list-style: none; }
   details summary::-webkit-details-marker { display: none; }
   details[open] summary > .icon { transform: rotate(45deg); }
@@ -109,7 +110,7 @@
   .service-help { background: var(--color-sage); border-color: transparent; }
   .service-help .button { align-self: flex-start; margin-top: auto; min-height: 44px; padding: 9px 14px; }
   .clinic-section { padding: 0; }
-  .clinic-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: 'photo intro' 'photo details'; column-gap: clamp(32px, 6vw, 88px); row-gap: 28px; padding-top: 72px; border-top: 1px solid var(--color-line); }
+  .clinic-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: 'photo intro' 'photo details'; column-gap: clamp(32px, 6vw, 88px); row-gap: 28px; padding-top: var(--section-space); border-top: 1px solid var(--color-line); }
   .clinic-intro { grid-area: intro; align-self: end; min-width: 0; }
   .clinic-photos { grid-area: photo; align-self: center; min-width: 0; margin: 0; }
   .clinic-main-photo { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 4px; object-position: center top; }
@@ -203,10 +204,11 @@
   .desktop-nav { gap: 18px; }
   .header-call { font-size: 13px; }
   .request-form { padding: 24px; }
-  .service-card, .service-help { padding: 22px; }
+  .service-card, .service-help { padding: 24px; }
   .service-card h3, .service-help h3 { font-size: 20px; }
 }
 @media (max-width: 800px) {
+  :root { --section-space: 68px; }
   .wrap { width: calc(100% - 40px); }
   .header-inner { height: 76px; gap: 20px; }
   .desktop-nav { display: none; }
@@ -217,7 +219,6 @@
   .mobile-nav a { min-height: 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-line); }
   .hero { padding-block: 24px; }
   .hero-stage { min-height: 560px; }
-  .hero .eyebrow { font-size: 11px; letter-spacing: 0; }
   .hero h1 { font-size: clamp(38px, 6.2vw, 50px); }
   .hero-copy { width: 54%; padding-top: 15px; }
   .hero-description { font-size: 14px; max-width: 265px; }
@@ -226,10 +227,9 @@
   .hero-actions .button { padding-inline: 16px; gap: 14px; }
   .hero-foot { margin-top: 24px; }
   .discipline-strip { font-size: 9px; gap: 10px; }
-  .section { padding-block: 68px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .section-description { font-size: 13px; max-width: 270px; }
-  .clinic-layout { grid-template-columns: 1fr; grid-template-areas: 'intro' 'photo' 'details'; gap: 28px; padding-top: 48px; }
+  .clinic-layout { grid-template-columns: 1fr; grid-template-areas: 'intro' 'photo' 'details'; gap: 28px; }
   .clinic-intro h2 { max-inline-size: 22ch; font-size: 34px; }
   .clinic-lead { max-width: 56ch; font-size: 16px; margin-top: 20px; }
   .clinic-main-photo { aspect-ratio: 3 / 2; }
@@ -245,6 +245,7 @@
   .contacts-map-frame { height: 400px; }
 }
 @media (max-width: 600px) {
+  :root { --section-space: 56px; }
   html { scroll-padding-top: 90px; }
   .wrap { width: calc(100% - 36px); }
   .brand-mark { font-size: 30px; }
@@ -257,8 +258,7 @@
   .hero { padding-top: 24px; padding-bottom: 30px; }
   .hero-stage { display: flex; flex-direction: column; min-height: 0; }
   .hero-copy { width: 100%; padding: 0; }
-  .hero .eyebrow { font-size: 12px; letter-spacing: 0; }
-  .hero h1 { font-size: clamp(38px, 11vw, 62px); margin-top: 26px; }
+  .hero h1 { font-size: clamp(38px, 11vw, 62px); }
   .hero-description { font-size: 15px; max-width: 330px; margin-top: 20px; }
   .hero-actions { gap: 10px; margin-top: 22px; }
   .hero-actions .button { padding: 15px 12px; gap: 12px; font-size: 13px; }
@@ -269,11 +269,10 @@
   .hero-portrait::after { content: ''; position: absolute; inset: 0 0 auto; height: 35px; background: linear-gradient(var(--color-paper), rgb(244 244 239 / 0)); pointer-events: none; }
   .discipline-strip { display: grid; grid-template-columns: 1fr auto 1fr; text-align: center; row-gap: 15px; padding-block: 20px; font-size: 9px; }
   .discipline-strip span:nth-child(4) { display: none; }
-  .section { padding-block: 56px; }
   h2 { font-size: 35px; letter-spacing: -1.5px; }
-  .eyebrow { font-size: 9px; letter-spacing: 1.3px; }
   .services h2 { margin-bottom: 24px; font-size: clamp(28px, 7vw, 34px); }
   .services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; }
+  .service-card, .service-help { min-height: 184px; padding: 22px; }
   .clinic-intro h2 { max-inline-size: 18ch; font-size: clamp(28px, 7vw, 34px); }
   .clinic-main-photo { aspect-ratio: 1; }
   .clinic-topics > div { grid-template-columns: 1fr; gap: 5px; padding-block: 16px; }

@@ -44,11 +44,11 @@ function Hero() {
   return <section className="hero wrap" aria-labelledby="hero-title">
     <div className="hero-stage">
       <HeroVideo/>
-      <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> Стоматологія в Івано-Франківську</p>
+      <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">Здорова усмішка</h1>
-        <p className="hero-description">Лікування й відновлення зубів, корекція прикусу. DVT Denta на Довженка, 31.</p>
+        <p className="hero-description">Лікуємо й відновлюємо зуби, вирівнюємо прикус. Почніть з огляду та плану лікування.</p>
         <div className="hero-actions"><a className="button button-dark" href="#request">Обговорити візит<Icon name="arrow"/></a><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
-        <div className="hero-foot"><Icon name="pin"/><span>Івано-Франківськ<br/><strong>{clinic.address}</strong></span></div>
+        <a className="hero-foot" href={clinic.maps} target="_blank" rel="noreferrer" aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><span className="hero-location-arrow" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>;
@@ -70,7 +70,7 @@ function Clinic() {
     document.getElementById('request')?.focus({ preventScroll: true });
   }
   return <section id="clinic" className="clinic-section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
-    <div className="clinic-intro"><h2 id="clinic-title">Перший візит до <span translate="no">DVT Denta</span></h2><p className="clinic-lead">Почніть з огляду, якщо ще не визначилися з лікуванням. На прийомі обговоріть із лікарем:</p></div>
+    <div className="clinic-intro"><h2 id="clinic-title">Перший візит до <span translate="no">DVT Denta</span></h2><p className="clinic-lead">Почніть з огляду. На прийомі обговоріть із лікарем:</p></div>
     <figure className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></figure>
     <div className="clinic-details"><dl className="clinic-topics" aria-label="Що обговорити на першому огляді">
       <div><dt>Ваш запит</dt><dd>Що вас турбує та що хочеться змінити в усмішці.</dd></div>
