@@ -68,7 +68,7 @@ function Services({ onRequest }: { onRequest: OpenRequest }) {
   </section>;
 }
 
-function Clinic({ onRequest }: { onRequest: OpenRequest }) {
+function Clinic() {
   return <section id="clinic" className="clinic-section" aria-labelledby="clinic-title"><div className="wrap clinic-layout">
     <div className="clinic-intro"><h2 id="clinic-title">Перший візит до <span translate="no">DVT Denta</span></h2><p className="clinic-lead">Почніть з огляду. На прийомі обговоріть із лікарем:</p></div>
     <figure className="clinic-photos"><img className="clinic-main-photo" src="./images/team.webp" width="1122" height="1402" loading="lazy" alt="Команда DVT Denta у стоматологічному кабінеті"/></figure>
@@ -76,7 +76,7 @@ function Clinic({ onRequest }: { onRequest: OpenRequest }) {
       <div><dt>Ваш запит</dt><dd>Що вас турбує та що хочеться змінити в усмішці.</dd></div>
       <div><dt>Можливі рішення</dt><dd>Які варіанти лікування можна розглянути у вашій ситуації.</dd></div>
       <div><dt>План і вартість</dt><dd>Які етапи, строки та витрати передбачає лікування.</dd></div>
-    </dl><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button></div>
+    </dl></div>
   </div></section>;
 }
 
@@ -89,7 +89,7 @@ function RequestInvitation({ onRequest }: { onRequest: OpenRequest }) {
 
 function FAQ({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="questions" className="wrap section faq-section" aria-labelledby="questions-title">
-    <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button></div>
+    <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p></div>
     <div className="faq-list">{questions.map(q => <details key={q.id} id={`faq-${q.id}`} open={q.id === 'cost'}>
       <summary><h3>{q.title}</h3><span className="faq-toggle" aria-hidden="true"/></summary>
       <div className="faq-answer"><p>{q.answer}</p>{q.action ? <button type="button" className="text-link" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">{q.action.label}<Icon name="arrow"/></button> : null}</div>
@@ -112,7 +112,7 @@ function Contacts({ onRequest }: { onRequest: OpenRequest }) {
 function App() {
   const requestRef = useRef<RequestModalHandle>(null);
   const openRequest: OpenRequest = category => requestRef.current?.open(category);
-  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero onRequest={openRequest}/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ВІДНОВЛЕННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ОРТОДОНТІЯ</span><Icon name="asterisk" className="discipline-star"/><span>ЕСТЕТИКА УСМІШКИ</span></div><Services onRequest={openRequest}/><Clinic onRequest={openRequest}/><RequestInvitation onRequest={openRequest}/><FAQ onRequest={openRequest}/><Contacts onRequest={openRequest}/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer><ContactRequestModal ref={requestRef}/></>;
+  return <><a className="skip-link" href="#main">Перейти до вмісту</a><Header/><main id="main" tabIndex={-1}><div id="top"/><Hero onRequest={openRequest}/><div className="wrap discipline-strip"><span>ЛІКУВАННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ВІДНОВЛЕННЯ</span><Icon name="asterisk" className="discipline-star"/><span>ОРТОДОНТІЯ</span><Icon name="asterisk" className="discipline-star"/><span>ЕСТЕТИКА УСМІШКИ</span></div><Services onRequest={openRequest}/><Clinic/><RequestInvitation onRequest={openRequest}/><FAQ onRequest={openRequest}/><Contacts onRequest={openRequest}/></main><footer className="wrap footer"><Brand/><p>© {new Date().getFullYear()} DVT Denta</p><a href="#top" className="text-link">На початок<span aria-hidden="true">↑</span></a></footer><ContactRequestModal ref={requestRef}/></>;
 }
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App/></StrictMode>);

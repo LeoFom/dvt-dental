@@ -140,7 +140,6 @@
   .clinic-topics > div { display: grid; grid-template-columns: minmax(0, 145px) minmax(0, 1fr); gap: 24px; padding-block: 18px; border-top: 1px solid var(--color-line); }
   .clinic-topics dt { font-size: 16px; font-weight: 550; line-height: 1.6; }
   .clinic-topics dd { margin: 0; color: var(--color-muted); font-size: 15px; line-height: 1.7; text-wrap: pretty; }
-  .clinic-details > .button { margin-top: 28px; }
   .request-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; padding: 40px; border-radius: 4px; background: var(--color-sage); }
   .request-intro { min-width: 0; }
   .request-intro h2 { max-inline-size: 22ch; font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
@@ -178,7 +177,6 @@
   .faq-intro { min-width: 0; }
   .faq-intro h2 { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
   .faq-section .section-description { margin-top: 20px; max-width: 30ch; font-size: 16px; line-height: 1.7; text-wrap: pretty; }
-  .faq-intro > .button { margin-top: 28px; }
   .faq-list { min-width: 0; }
   .faq-list { border-top: 1px solid var(--color-line); }
   .faq-list details { border-bottom: 1px solid var(--color-line); }
@@ -306,7 +304,6 @@
   .clinic-intro h2 { max-inline-size: 18ch; font-size: clamp(28px, 7vw, 34px); }
   .clinic-main-photo { aspect-ratio: 1; }
   .clinic-topics > div { grid-template-columns: 1fr; gap: 5px; padding-block: 16px; }
-  .clinic-details > .button { margin-top: 24px; }
   .request-intro h2 { font-size: clamp(28px, 7vw, 34px); }
   .request-card { padding: 24px; }
   .request-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
