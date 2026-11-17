@@ -281,8 +281,8 @@
   .header-call { min-width: 44px; justify-content: center; margin-left: auto; }
   .header-call span { display: none; }
   .header-call .icon { width: 21px; height: 21px; }
-  .hero { width: 100%; margin-inline: 0; padding: 24px 0 30px 18px; }
-  .hero-stage { min-height: 470px; overflow: clip; }
+  .hero { width: 100%; margin-inline: 0; padding: 24px 0 24px 18px; }
+  .hero-stage { --mobile-media-top: 110px; --mobile-media-height: min(330px, calc((100vw - 36px) * .8)); min-height: calc(var(--mobile-media-top) + var(--mobile-media-height)); overflow: clip; }
   .hero-copy { width: calc(100% - 18px); padding-top: 28px; }
   .hero h1 { font-size: clamp(34px, 10vw, 52px); }
   .hero-description { font-size: 14px; max-width: 49%; margin-top: 18px; line-height: 1.65; }
@@ -292,7 +292,7 @@
   .hero-actions .text-link { display: none; }
   .hero-foot { max-width: 190px; margin-top: 20px; }
   .hero-foot.hero-reveal { --reveal-step: 4; }
-  .hero-portrait { --mobile-media-height: min(330px, calc((100vw - 36px) * .8)); position: absolute; inset: 0 0 auto; height: var(--mobile-media-height); z-index: -1; transform-origin: center top; transform: translate3d(calc(min(24%, calc(50% - var(--mobile-media-height) * .32 - 12px)) + clamp(12px, 4vw, 20px)), 110px, 0); transition: transform .85s cubic-bezier(.2,.7,.2,1); mask-image: linear-gradient(to right, transparent, #000 8px); }
+  .hero-portrait { position: absolute; inset: 0 0 auto; height: var(--mobile-media-height); z-index: -1; transform-origin: center top; transform: translate3d(calc(min(24%, calc(50% - var(--mobile-media-height) * .32 - 12px)) + clamp(12px, 4vw, 20px)), var(--mobile-media-top), 0); transition: transform .85s cubic-bezier(.2,.7,.2,1); mask-image: linear-gradient(to right, transparent, #000 8px); }
   .hero-stage[data-intro='waiting'] .hero-portrait { transform: translate3d(-9px, 24px, 0) scale(1.2); }
   .hero-portrait img, .hero-portrait video { position: absolute; left: 50%; top: 0; width: auto; max-width: none; height: 100%; object-fit: contain; transform: translateX(-72%); mask-image: linear-gradient(to bottom, #000 90%, transparent); }
   .hero-video-toggle { right: 8px; bottom: 8px; }
