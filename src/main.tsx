@@ -82,7 +82,7 @@ function Clinic() {
 
 function RequestForm() {
   return <section id="request" tabIndex={-1} className="wrap section request-section" aria-labelledby="request-title"><div className="request-card">
-    <div className="request-intro"><h2 id="request-title">Обговорімо ваш візит</h2><p className="request-description">Залиште номер телефону, щоб узгодити з клінікою час прийому та поставити свої запитання.</p></div>
+    <div className="request-intro"><h2 id="request-title">Обговорімо ваш візит</h2><p className="request-description">Залиште номер телефону, щоб узгодити час прийому та поставити свої запитання.</p></div>
     <ContactRequestForm/>
   </div></section>;
 }
