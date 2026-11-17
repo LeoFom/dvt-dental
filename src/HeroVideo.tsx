@@ -94,8 +94,8 @@ export function HeroVideo({ onIntroReady }: { onIntroReady: () => void }) {
     <div className={`hero-portrait${showStill && stillReady ? ' is-still' : ''}`} data-playback={reducedMotion ? 'reduced-motion' : playback} aria-hidden="true">
       <video
         ref={videoRef}
-        src={reducedMotion ? undefined : './media/hero-smile.mp4'}
-        poster={reducedMotion ? './images/hero-video-last.webp' : './images/hero-video-first.webp'}
+        src={reducedMotion ? undefined : './media/hero-smile-v2.mp4'}
+        poster={reducedMotion ? './images/hero-video-v2-last.webp' : './images/hero-video-v2-first.webp'}
         width="1600"
         height="900"
         muted
@@ -108,7 +108,7 @@ export function HeroVideo({ onIntroReady }: { onIntroReady: () => void }) {
         onError={useFallback}
         tabIndex={-1}
       />
-      <img className="hero-video-still" src="./images/hero-video-last.webp" width="1600" height="900" alt="" fetchPriority={showStill ? 'high' : 'low'} onLoad={() => setStillReady(true)}/>
+      <img className="hero-video-still" src="./images/hero-video-v2-last.webp" width="1600" height="900" alt="" fetchPriority={showStill ? 'high' : 'low'} onLoad={() => setStillReady(true)}/>
     </div>
     {!showStill && playback !== 'loading' ? <button
       type="button"

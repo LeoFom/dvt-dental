@@ -16,12 +16,12 @@ for (const subset of ['cyrillic', 'latin']) {
   css = css.replaceAll(`/fonts/${fontName}`, fontData);
   html = html.replaceAll(`/fonts/${fontName}`, fontData);
 }
-for (const name of ['clinic', 'team', 'logo', 'hero-video-first', 'hero-video-last']) {
+for (const name of ['clinic', 'team', 'logo', 'hero-video-v2-first', 'hero-video-v2-last']) {
   const asset = await readFile(path.join(dist, 'images', `${name}.webp`));
   js = js.replaceAll(`./images/${name}.webp`, `data:image/webp;base64,${asset.toString('base64')}`);
 }
-const video = await readFile(path.join(dist, 'media', 'hero-smile.mp4'));
-js = js.replaceAll('./media/hero-smile.mp4', `data:video/mp4;base64,${video.toString('base64')}`);
+const video = await readFile(path.join(dist, 'media', 'hero-smile-v2.mp4'));
+js = js.replaceAll('./media/hero-smile-v2.mp4', `data:video/mp4;base64,${video.toString('base64')}`);
 const favicon = await readFile(path.join(dist, 'favicon.svg'));
 html = html.replace(/(?:\.\/|\/)favicon\.svg/, `data:image/svg+xml;base64,${favicon.toString('base64')}`);
 html = html.replace(/<link[^>]*href="[^"]+\.css"[^>]*>/, () => `<style>${css}</style>`);
