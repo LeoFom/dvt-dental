@@ -92,7 +92,6 @@
   .hero-foot .icon { width: 18px; }
   .discipline-strip { border-block: 1px solid var(--color-line); padding-block: 26px; display: flex; justify-content: space-between; gap: 20px; font-size: 11px; letter-spacing: 1.3px; }
   .discipline-strip span:nth-child(even) { color: #6b8050; }
-  .faq-section .eyebrow { margin-bottom: 24px; }
   .muted-title { color: #77806d; }
   .section-description { max-width: 340px; font-size: 14px; line-height: 1.8; color: var(--color-muted); }
   .services h2 { margin-bottom: 32px; font-family: var(--font-display); font-size: clamp(32px, 3.3vw, 46px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
@@ -146,14 +145,23 @@
   .request-check { color: #45622a; flex: 0 0 auto; }
   .request-confirmation h3 { font-size: 24px; font-weight: 500; line-height: 1.3; letter-spacing: -.5px; }
   .request-confirmation p { color: var(--color-muted); font-size: 16px; line-height: 1.7; max-width: 40ch; }
-  .faq-section { display: grid; grid-template-columns: 1fr 1.18fr; gap: 90px; border-top: 1px solid var(--color-line); }
-  .faq-section h2 { font-size: clamp(32px, 3vw, 43px); }
-  .faq-section .section-description { margin-top: 24px; max-width: 260px; }
+  .faq-section { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 88px); border-top: 1px solid var(--color-line); }
+  .faq-intro { min-width: 0; }
+  .faq-intro h2 { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
+  .faq-section .section-description { margin-top: 20px; max-width: 30ch; font-size: 16px; line-height: 1.7; text-wrap: pretty; }
+  .faq-list { min-width: 0; }
   .faq-list { border-top: 1px solid var(--color-line); }
   .faq-list details { border-bottom: 1px solid var(--color-line); }
-  .faq-list summary { display: flex; align-items: center; gap: 20px; padding: 23px 0; }
-  .faq-list h3 { font-size: 15px; line-height: 1.5; font-weight: 450; flex: 1; }
-  .faq-list details > p { margin: 0 0 24px; font-size: 14px; color: var(--color-muted); line-height: 1.8; }
+  .faq-list summary { display: flex; align-items: center; gap: 20px; min-height: 64px; padding-block: 20px; }
+  .faq-list h3 { min-width: 0; font-size: 16px; line-height: 1.5; font-weight: 500; flex: 1; }
+  .faq-list summary:hover { color: #45622a; }
+  .faq-toggle { position: relative; width: 20px; height: 20px; flex: 0 0 auto; }
+  .faq-toggle::before, .faq-toggle::after { content: ''; position: absolute; top: 50%; left: 3px; width: 14px; height: 1px; background: currentColor; }
+  .faq-toggle::after { transform: rotate(90deg); }
+  .faq-list details[open] .faq-toggle::after { transform: rotate(0); }
+  .faq-answer { padding: 0 40px 22px 0; }
+  .faq-answer p { max-width: 68ch; font-size: 15px; color: var(--color-muted); line-height: 1.7; text-wrap: pretty; }
+  .faq-answer .text-link { margin-top: 8px; font-size: 14px; }
   .contacts-section { background: var(--color-ink); color: var(--color-paper); }
   .contacts-section .eyebrow { color: #c1c9b8; }
   .contacts-heading { display: flex; justify-content: space-between; gap: 30px; align-items: center; margin-block: 28px 60px; }
@@ -189,7 +197,6 @@
   .hero-actions { gap: 16px; }
   .desktop-nav { gap: 18px; }
   .header-call { font-size: 13px; }
-  .faq-section { gap: 44px; }
   .request-form { padding: 24px; }
   .service-card, .service-help { padding: 22px; }
   .service-card h3, .service-help h3 { font-size: 20px; }
@@ -227,7 +234,7 @@
   .request-intro h2 { max-inline-size: 20ch; font-size: 34px; }
   .request-description { max-width: 56ch; margin-top: 20px; font-size: 16px; }
   .faq-section { gap: 30px; }
-  .faq-section h2 { font-size: 32px; }
+  .faq-intro h2 { font-size: 34px; }
   .contacts-grid { gap: 22px; }
   .contacts-grid address { font-size: 14px; }
   .contact-phone { font-size: 24px; }
@@ -261,7 +268,6 @@
   .section { padding-block: 56px; }
   h2 { font-size: 35px; letter-spacing: -1.5px; }
   .eyebrow { font-size: 9px; letter-spacing: 1.3px; }
-  .faq-section .eyebrow { margin-bottom: 19px; }
   .services h2 { margin-bottom: 24px; font-size: clamp(28px, 7vw, 34px); }
   .services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; }
   .clinic-intro h2 { max-inline-size: 18ch; font-size: clamp(28px, 7vw, 34px); }
@@ -271,11 +277,9 @@
   .request-intro h2 { font-size: clamp(28px, 7vw, 34px); }
   .request-form { padding: 20px; }
   .faq-section { grid-template-columns: 1fr; gap: 30px; }
-  .faq-section h2 { font-size: 35px; }
-  .faq-section .section-description { max-width: 300px; }
-  .faq-list summary { gap: 14px; padding-block: 21px; }
-  .faq-list h3 { font-size: 15px; }
-  .faq-list details > p { margin-right: 10px; }
+  .faq-intro h2 { font-size: clamp(28px, 7vw, 34px); }
+  .faq-list summary { gap: 16px; padding-block: 18px; }
+  .faq-answer { padding-right: 0; }
   .contacts-heading { align-items: end; margin-block: 26px 36px; gap: 12px; }
   .contacts-heading h2 { font-size: clamp(36px, 9.7vw, 52px); letter-spacing: -1.8px; }
   .round-arrow { width: 50px; height: 50px; flex: 0 0 50px; }

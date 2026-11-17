@@ -88,7 +88,13 @@ function RequestForm() {
 }
 
 function FAQ() {
-  return <section id="questions" className="wrap section faq-section"><div><p className="eyebrow">ПЕРЕД ВІЗИТОМ</p><h2>Менше невідомого.<br/><span className="muted-title">Більше ясності.</span></h2><p className="section-description">Відповіді, що допоможуть підготуватися до першого звернення.</p></div><div className="faq-list">{questions.map(q => <details key={q.title}><summary><h3>{q.title}</h3><Icon name="plus"/></summary><p>{q.answer}</p></details>)}</div></section>;
+  return <section id="questions" className="wrap section faq-section" aria-labelledby="questions-title">
+    <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p></div>
+    <div className="faq-list">{questions.map(q => <details key={q.id} id={`faq-${q.id}`} open={q.id === 'cost'}>
+      <summary><h3>{q.title}</h3><span className="faq-toggle" aria-hidden="true"/></summary>
+      <div className="faq-answer"><p>{q.answer}</p>{q.action ? <a className="text-link" href={q.action.href}>{q.action.label}<Icon name="arrow"/></a> : null}</div>
+    </details>)}</div>
+  </section>;
 }
 
 function Contacts() {
