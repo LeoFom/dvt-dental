@@ -29,8 +29,8 @@
 }
 
 @layer base {
-  :root { --section-space: 100px; }
-  html { scroll-behavior: smooth; scroll-padding-top: 100px; scrollbar-gutter: stable; background: var(--color-paper); }
+  :root { --section-space: 100px; --header-height: 92px; --anchor-gap: 24px; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-height) + 1px + var(--anchor-gap)); scrollbar-gutter: stable; background: var(--color-paper); }
   html:has(.request-dialog[open]) { overflow: hidden; }
   body { @apply bg-paper text-ink font-sans antialiased; margin: 0; font-size: 16px; line-height: 1.55; }
   * { box-sizing: border-box; }
@@ -43,7 +43,8 @@
   h1, h2, h3 { text-wrap: balance; }
   h2 { font-size: clamp(34px, 3.4vw, 49px); font-weight: 450; line-height: 1.15; letter-spacing: -2px; }
   img { display: block; max-width: 100%; object-fit: cover; }
-  section[id] { scroll-margin-top: 24px; }
+  /* Target the content after section padding; reserve the sticky header once. */
+  section[id] { scroll-margin-top: calc(0px - var(--section-space)); }
   ::selection { background: var(--color-sage); color: var(--color-ink); }
 }
 
@@ -52,7 +53,7 @@
   .section { padding-block: var(--section-space); }
   .icon { flex: 0 0 auto; }
   .header { position: sticky; top: 0; z-index: 20; background: rgb(244 244 239 / .97); border-bottom: 1px solid var(--color-line); }
-  .header-inner { height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+  .header-inner { height: var(--header-height); display: flex; align-items: center; justify-content: space-between; gap: 30px; }
   .brand { display: inline-flex; flex-direction: column; width: fit-content; min-height: 44px; justify-content: center; }
   .brand > img { width: 120px; height: 48px; object-fit: contain; mix-blend-mode: multiply; }
   .brand-mark { display: flex; align-items: center; font-size: 36px; font-weight: 750; letter-spacing: -2.5px; line-height: 1; }
@@ -223,9 +224,9 @@
   .service-card h3, .service-help h3 { font-size: 20px; }
 }
 @media (max-width: 800px) {
-  :root { --section-space: 68px; }
+  :root { --section-space: 68px; --header-height: 76px; }
   .wrap { width: calc(100% - 40px); }
-  .header-inner { height: 76px; gap: 20px; }
+  .header-inner { gap: 20px; }
   .desktop-nav { display: none; }
   .header-call { margin-left: auto; }
   .menu-button { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 13px; }
@@ -259,13 +260,12 @@
   .contacts-map-frame { height: 400px; }
 }
 @media (max-width: 600px) {
-  :root { --section-space: 56px; }
-  html { scroll-padding-top: 90px; }
+  :root { --section-space: 56px; --header-height: 72px; }
   .wrap { width: calc(100% - 36px); }
   .brand-mark { font-size: 30px; }
   .brand-mark .icon { width: 23px; height: 29px; }
   .brand-caption { font-size: 6px; letter-spacing: 2.5px; }
-  .header-inner { height: 72px; gap: 14px; }
+  .header-inner { gap: 14px; }
   .header-call { min-width: 44px; justify-content: center; margin-left: auto; }
   .header-call span { display: none; }
   .header-call .icon { width: 21px; height: 21px; }
