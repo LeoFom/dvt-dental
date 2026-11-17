@@ -98,7 +98,15 @@ function FAQ() {
 }
 
 function Contacts() {
-  return <section id="contacts" className="contacts-section"><div className="wrap section"><p className="eyebrow">ДО ЗУСТРІЧІ В DVT DENTA</p><div className="contacts-heading"><h2>Зробіть крок<br/>до своєї <span>усмішки.</span></h2><a className="round-arrow" href={clinic.phoneHref} aria-label={`Зателефонувати ${clinic.phone}`}><Icon name="arrow"/></a></div><div className="contacts-grid"><div><p className="contact-label">ЗАТЕЛЕФОНУЙТЕ</p><a className="contact-phone" href={clinic.phoneHref}>{clinic.phone}</a><p>Узгодьте час і вартість прийому.</p></div><div><p className="contact-label">ЗАВІТАЙТЕ</p><address>{clinic.city}<br/>{clinic.address}</address><a className="text-link" href={clinic.maps} target="_blank" rel="noreferrer">Прокласти маршрут<Icon name="arrow"/></a></div><div><p className="contact-label">НАПИШІТЬ</p><a className="instagram-handle" href={clinic.instagram} target="_blank" rel="noreferrer">@dvt_denta <Icon name="instagram"/></a><p>Час візиту та графік роботи<br/>уточніть під час звернення.</p></div></div></div></section>;
+  return <section id="contacts" className="contacts-section" aria-labelledby="contacts-title"><div className="wrap section contacts-layout">
+    <div className="contacts-info"><h2 id="contacts-title">Як нас знайти</h2>
+      <address className="contacts-address"><span className="contact-street">{clinic.address}</span><span className="contact-locality">{clinic.mapLocality}</span></address>
+      <a className="button contacts-route" href={clinic.directions} target="_blank" rel="noreferrer" aria-label="Прокласти маршрут у Google Maps, у новій вкладці">Прокласти маршрут<Icon name="arrow"/></a>
+      <div className="contacts-phone"><p className="contact-label">Телефон</p><a className="contact-phone" href={clinic.phoneHref}>{clinic.phone}</a><p className="contacts-note">Час візиту узгодьте заздалегідь.</p></div>
+      <a className="text-link contacts-request" href="#request">Залишити заявку<Icon name="arrow"/></a>
+    </div>
+    <div className="contacts-map"><div className="contacts-map-frame"><iframe title="Карта: стоматологія DVT на вулиці Олександра Довженка, 31" src={clinic.mapEmbed} width="800" height="500" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/></div><a className="text-link contacts-map-link" href={clinic.maps} target="_blank" rel="noreferrer" aria-label="Відкрити картку DVT у Google Maps, у новій вкладці">Відкрити Google Maps<Icon name="arrow"/></a></div>
+  </div></section>;
 }
 
 function App() {

@@ -5,7 +5,10 @@ export const clinic = {
   instagram: 'https://www.instagram.com/dvt_denta/',
   address: 'вул. Олександра Довженка, 31',
   city: 'Івано-Франківськ',
-  maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Івано-Франківськ, вулиця Олександра Довженка, 31'),
+  maps: 'https://maps.app.goo.gl/nZCB6XXD6sASKpYA7?g_st=ic',
+  mapLocality: 'Крихівці, Івано-Франківська область',
+  mapEmbed: 'https://www.google.com/maps/embed?pb=!1m4!3m2!1m1!4s2353964689618784697!6i16!3m1!1suk!5m1!1suk',
+  directions: 'https://www.google.com/maps/dir/?api=1&destination=48.9031043%2C24.6841498&destination_place_id=ChIJvcs-dTHBMEcRuVGK0mn2qiA',
 };
 
 export const services = [

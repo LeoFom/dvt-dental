@@ -163,21 +163,26 @@
   .faq-answer p { max-width: 68ch; font-size: 15px; color: var(--color-muted); line-height: 1.7; text-wrap: pretty; }
   .faq-answer .text-link { margin-top: 8px; font-size: 14px; }
   .contacts-section { background: var(--color-ink); color: var(--color-paper); }
-  .contacts-section .eyebrow { color: #c1c9b8; }
-  .contacts-heading { display: flex; justify-content: space-between; gap: 30px; align-items: center; margin-block: 28px 60px; }
-  .contacts-heading h2 { font-size: clamp(42px, 5.5vw, 77px); line-height: 1.07; letter-spacing: -3px; }
-  .contacts-heading h2 span { color: var(--color-sage); }
-  .round-arrow { width: 98px; height: 98px; border: 1px solid #67715e; border-radius: 50%; display: grid; place-items: center; transition: background-color .2s; }
-  .round-arrow:hover { background: #414d3d; }
-  .round-arrow .icon { width: 38px; height: 38px; transform: rotate(-35deg); }
-  .contacts-grid { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 32px; border-top: 1px solid #4d5749; padding-top: 30px; }
-  .contact-label { font-size: 9px; letter-spacing: 1.8px; color: #b7c2ad; margin-bottom: 16px; }
-  .contact-phone { font-size: clamp(23px, 2.6vw, 35px); font-weight: 400; letter-spacing: -.7px; display: inline-flex; min-height: 44px; align-items: center; }
-  .contacts-grid > div > p:last-child { color: #c0c6b9; font-size: 12px; margin-top: 14px; }
-  .contacts-grid address { font-style: normal; font-size: 17px; line-height: 1.7; }
-  .contacts-grid .text-link { font-size: 11px; margin-top: 8px; }
-  .instagram-handle { font-size: 22px; display: inline-flex; align-items: center; gap: 15px; min-height: 44px; }
-  .instagram-handle .icon { width: 19px; }
+  .contacts-section :focus-visible { outline-color: var(--color-sage); }
+  .contacts-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+  .contacts-info { min-width: 0; }
+  .contacts-info h2 { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 44px); font-weight: 500; line-height: 1.2; letter-spacing: -.045em; }
+  .contacts-address { display: flex; flex-direction: column; gap: 6px; margin-top: 24px; font-style: normal; }
+  .contact-street { font-size: 20px; line-height: 1.5; }
+  .contact-locality { color: #c0c6b9; font-size: 16px; line-height: 1.7; }
+  .contacts-route { margin-top: 24px; color: var(--color-ink); background: var(--color-sage); }
+  .contacts-route:hover { background: var(--color-paper); }
+  .contacts-phone { margin-top: 28px; padding-top: 24px; border-top: 1px solid #4d5749; }
+  .contact-label { color: #c0c6b9; font-size: 14px; line-height: 1.6; }
+  .contact-phone { display: inline-flex; min-height: 44px; align-items: center; font-size: 28px; font-weight: 450; line-height: 1.5; letter-spacing: -.035em; }
+  .contact-phone:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .contacts-note { margin-top: 6px; color: #c0c6b9; font-size: 14px; line-height: 1.7; }
+  .contacts-request { margin-top: 16px; }
+  .contacts-request:hover, .contacts-map-link:hover { color: var(--color-sage); }
+  .contacts-map { min-width: 0; }
+  .contacts-map-frame { width: 100%; height: 460px; overflow: hidden; border-radius: 4px; background: #e5e8df; }
+  .contacts-map-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .contacts-map-link { margin-top: 8px; font-size: 13px; }
   .footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 34px; }
   .footer > p { font-size: 11px; color: var(--color-muted); }
   .footer .brand-mark { font-size: 28px; }
@@ -235,10 +240,9 @@
   .request-description { max-width: 56ch; margin-top: 20px; font-size: 16px; }
   .faq-section { gap: 30px; }
   .faq-intro h2 { font-size: 34px; }
-  .contacts-grid { gap: 22px; }
-  .contacts-grid address { font-size: 14px; }
-  .contact-phone { font-size: 24px; }
-  .instagram-handle { font-size: 19px; gap: 8px; }
+  .contacts-layout { grid-template-columns: 1fr; gap: 32px; }
+  .contacts-info h2 { font-size: 34px; }
+  .contacts-map-frame { height: 400px; }
 }
 @media (max-width: 600px) {
   html { scroll-padding-top: 90px; }
@@ -280,16 +284,10 @@
   .faq-intro h2 { font-size: clamp(28px, 7vw, 34px); }
   .faq-list summary { gap: 16px; padding-block: 18px; }
   .faq-answer { padding-right: 0; }
-  .contacts-heading { align-items: end; margin-block: 26px 36px; gap: 12px; }
-  .contacts-heading h2 { font-size: clamp(36px, 9.7vw, 52px); letter-spacing: -1.8px; }
-  .round-arrow { width: 50px; height: 50px; flex: 0 0 50px; }
-  .round-arrow .icon { width: 25px; height: 25px; }
-  .contacts-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 26px; }
-  .contact-label { margin-bottom: 8px; }
-  .contact-phone { font-size: 32px; }
-  .contacts-grid address { font-size: 17px; }
-  .instagram-handle { font-size: 25px; }
-  .contacts-grid > div > p:last-child { margin-top: 5px; }
+  .contacts-info h2 { font-size: clamp(28px, 7vw, 34px); }
+  .contact-street { font-size: 18px; }
+  .contact-phone { font-size: 26px; }
+  .contacts-map-frame { height: 320px; }
   .footer { flex-wrap: wrap; gap: 20px; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   .footer > p { order: 3; width: 100%; text-align: center; font-size: 10px; }
   .footer > .text-link { margin-left: auto; font-size: 12px; }
