@@ -1,4 +1,4 @@
-import { StrictMode, useRef, useState } from 'react';
+import { StrictMode, useCallback, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { clinic, questions, services } from './content';
 import { HeroVideo } from './HeroVideo';
@@ -41,14 +41,16 @@ function Header() {
 }
 
 function Hero({ onRequest }: { onRequest: OpenRequest }) {
+  const [intro, setIntro] = useState<'waiting' | 'revealed' | 'complete'>(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'complete' : window.matchMedia('(min-width: 601px)').matches ? 'revealed' : 'waiting');
+  const reveal = useCallback(() => setIntro(current => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'complete' : current === 'waiting' ? 'revealed' : current), []);
   return <section className="hero wrap" aria-labelledby="hero-title">
-    <div className="hero-stage">
-      <HeroVideo/>
-      <div className="hero-copy">
-        <h1 id="hero-title" className="hero-title">Здорова усмішка</h1>
-        <p className="hero-description">Лікуємо й відновлюємо зуби, вирівнюємо прикус. Почніть з огляду та плану лікування.</p>
-        <div className="hero-actions"><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
-        <a className="hero-foot" href={clinic.maps} target="_blank" rel="noreferrer" aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><span className="hero-location-arrow" aria-hidden="true">↗</span></a>
+    <div className="hero-stage" data-intro={intro}>
+      <HeroVideo onIntroReady={reveal}/>
+      <div className="hero-copy" inert={intro === 'waiting'} onFocusCapture={() => setIntro('complete')}>
+        <h1 id="hero-title" className="hero-title"><span className="hero-reveal">Здорова</span>{' '}<span className="hero-reveal">усмішка</span></h1>
+        <p className="hero-description hero-reveal">Лікуємо й відновлюємо зуби, вирівнюємо прикус. Почніть з огляду та плану лікування.</p>
+        <div className="hero-actions"><button type="button" className="button button-dark hero-reveal" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Обговорити візит<Icon name="arrow"/></button><a className="text-link hero-reveal" href="#services">Обрати послугу<span aria-hidden="true">↗</span></a></div>
+        <a className="hero-foot hero-reveal" href={clinic.maps} target="_blank" rel="noreferrer" onAnimationEnd={() => setIntro('complete')} aria-label={`${clinic.city}, ${clinic.address}. Відкрити у Google Maps, у новій вкладці`}><Icon name="pin"/><span>{clinic.city}<br/><strong>{clinic.address}</strong></span><span className="hero-location-arrow" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>;
@@ -61,7 +63,7 @@ function Services({ onRequest }: { onRequest: OpenRequest }) {
       <div className="service-heading"><Icon name={service.icon}/><h3 id={`service-${service.id}-title`}>{service.title}</h3></div><p id={`service-${service.id}-description`}>{service.description}</p>
       <button type="button" className="service-select" onClick={() => onRequest(service.id)} aria-labelledby={`service-${service.id}-title`} aria-describedby={`service-${service.id}-description`} aria-haspopup="dialog" aria-controls="request-dialog"><span className="service-card-arrow"><Icon name="arrow"/></span></button>
     </article>)}
-    <article className="service-help"><h3 id="service-consultation-title">Почніть з огляду</h3><p id="service-consultation-description">Допоможемо визначити, який напрям лікування вам потрібен.</p><button type="button" className="service-select" onClick={() => onRequest()} aria-labelledby="service-consultation-title" aria-describedby="service-consultation-description" aria-haspopup="dialog" aria-controls="request-dialog"><span className="service-card-arrow"><Icon name="arrow"/></span></button></article></div>
+    <article className="service-help"><h3 id="service-consultation-title">Почніть з огляду</h3><p id="service-consultation-description">Допоможемо визначити, який напрям лікування вам потрібен.</p><button type="button" className="service-select" onClick={() => onRequest()} aria-labelledby="service-consultation-title service-consultation-cta" aria-describedby="service-consultation-description" aria-haspopup="dialog" aria-controls="request-dialog"><span id="service-consultation-cta" className="button button-dark service-help-cta">Залишити заявку</span><span className="service-card-arrow"><Icon name="arrow"/></span></button></article></div>
   </section>;
 }
 
@@ -86,7 +88,7 @@ function RequestInvitation({ onRequest }: { onRequest: OpenRequest }) {
 
 function FAQ({ onRequest }: { onRequest: OpenRequest }) {
   return <section id="questions" className="wrap section faq-section" aria-labelledby="questions-title">
-    <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p></div>
+    <div className="faq-intro"><h2 id="questions-title">Перед візитом</h2><p className="section-description">Запис, вартість і підготовка до прийому.</p><button type="button" className="button button-dark" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">Залишити заявку<Icon name="arrow"/></button></div>
     <div className="faq-list">{questions.map(q => <details key={q.id} id={`faq-${q.id}`} open={q.id === 'cost'}>
       <summary><h3>{q.title}</h3><span className="faq-toggle" aria-hidden="true"/></summary>
       <div className="faq-answer"><p>{q.answer}</p>{q.action ? <button type="button" className="text-link" onClick={() => onRequest()} aria-haspopup="dialog" aria-controls="request-dialog">{q.action.label}<Icon name="arrow"/></button> : null}</div>
