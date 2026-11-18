@@ -161,8 +161,8 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
       <h2 id="request-dialog-title" className="request-dialog-title">Обговорімо ваш візит</h2>
       <p id="request-dialog-description" className="request-dialog-description">{status === 'success' ? 'Ми отримали ваше звернення.' : 'Залиште телефон — зв’яжемося з вами, щоб узгодити час і деталі прийому.'}</p>
       {status === 'success' ? <div ref={successRef} className="request-confirmation" tabIndex={-1} role="status" aria-live="polite">
-        <svg className="request-check" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" stroke="currentColor"/><path d="m12 20 5 5 11-11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        <h3>Заявку надіслано</h3><p>Дякуємо! Узгодимо час і відповімо на ваші запитання під час розмови.</p>
+        <div className="request-confirmation-heading"><h3>Заявку надіслано</h3><svg className="request-check" width="32" height="32" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" stroke="currentColor"/><path d="m12 20 5 5 11-11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+        <p>Дякуємо! Узгодимо час і відповімо на ваші запитання під час розмови.</p>
         <button type="button" className="button button-dark request-submit" onClick={close}>Повернутися до сайту</button>
       </div> : <form className="request-form" aria-labelledby="request-dialog-title" aria-busy={status === 'pending'} onSubmit={submitRequest} noValidate>
         <div className="request-trap" aria-hidden="true"><label htmlFor="request-website">Website</label><input id="request-website" name="website" type="text" tabIndex={-1} autoComplete="off" maxLength={128}/></div>
