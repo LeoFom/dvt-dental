@@ -14,6 +14,10 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
   const successRef = useRef<HTMLDivElement>(null);
   const inFlight = useRef(false);
   const backdropPress = useRef(false);
+  const closing = useRef(false);
+  const closeTimer = useRef<number | undefined>(undefined);
+  const revealFrame = useRef<number | undefined>(undefined);
+  const [phase, setPhase] = useState<'closed' | 'open' | 'closing'>('closed');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState<RequestCategoryId>(defaultCategoryId);
@@ -26,6 +30,8 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
 
   useImperativeHandle(ref, () => ({
     open(nextCategory = defaultCategoryId) {
+      cancelMotion();
+      closing.current = false;
       // A request can finish while the dialog is closed. Keep its submitted
       // category visible and prevent starting another request until it settles.
       if (!inFlight.current) {
@@ -39,12 +45,29 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
         }
       }
       const dialog = dialogRef.current;
+      if (dialog) dialog.style.height = '';
       if (dialog && !dialog.open) {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setPhase(reducedMotion ? 'open' : 'closed');
         dialog.showModal();
         dialog.scrollTop = 0;
+        if (!reducedMotion) {
+          // Paint the starting position before transitioning the native dialog.
+          revealFrame.current = requestAnimationFrame(() => {
+            revealFrame.current = requestAnimationFrame(() => {
+              revealFrame.current = undefined;
+              if (dialog.open && !closing.current) setPhase('open');
+            });
+          });
+        }
+      } else if (dialog?.open) {
+        // A new request can reverse an exit already in progress.
+        setPhase('open');
       }
     },
   }), [status]);
+
+  useEffect(() => () => cancelMotion(), []);
 
   useEffect(() => {
     if (!hasUnsentInput) return;
@@ -60,7 +83,38 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
     if (status === 'success' && dialogRef.current?.open) successRef.current?.focus({ preventScroll: true });
   }, [status]);
 
-  function close() { dialogRef.current?.close(); }
+  function cancelMotion() {
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = undefined;
+    if (revealFrame.current !== undefined) cancelAnimationFrame(revealFrame.current);
+    revealFrame.current = undefined;
+  }
+
+  function finishClose() {
+    cancelMotion();
+    closing.current = false;
+    const dialog = dialogRef.current;
+    dialog?.close();
+    if (dialog) dialog.style.height = '';
+    setPhase('closed');
+  }
+
+  function close() {
+    const dialog = dialogRef.current;
+    if (!dialog?.open || closing.current) return;
+    cancelMotion();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finishClose();
+      return;
+    }
+    // An arriving response must not resize the panel during its exit.
+    if (inFlight.current) dialog.style.height = `${dialog.offsetHeight}px`;
+    closing.current = true;
+    setPhase('closing');
+    // Keep focus trapping and scroll locking until the exit finishes.
+    // The timeout also closes the dialog if transitionend never fires.
+    closeTimer.current = window.setTimeout(finishClose, 260);
+  }
 
   function isBackdrop(event: React.MouseEvent<HTMLDialogElement> | React.PointerEvent<HTMLDialogElement>) {
     if (event.target !== event.currentTarget) return false;
@@ -75,6 +129,7 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
 
   function cycleFocus(event: React.KeyboardEvent<HTMLDialogElement>) {
     if (event.key !== 'Tab') return;
+    if (closing.current) { event.preventDefault(); return; }
     const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled):not([tabindex="-1"]), select:not(:disabled), a[href]')];
     const first = controls[0], last = controls.at(-1);
     if (event.shiftKey && document.activeElement === first) {
@@ -88,7 +143,7 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
 
   async function submitRequest(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (inFlight.current || status === 'success') return;
+    if (closing.current || inFlight.current || status === 'success') return;
     setSubmitError('');
     if (/[\u0000-\u001f\u007f]/.test(name)) {
       setNameError('Вкажіть ім’я без спеціальних символів або залиште поле порожнім.');
@@ -152,8 +207,10 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
     }
   }
 
-  return <dialog ref={dialogRef} id="request-dialog" className="request-dialog" aria-labelledby="request-dialog-title" aria-describedby="request-dialog-description"
+  return <dialog ref={dialogRef} id="request-dialog" className="request-dialog" data-phase={phase} aria-labelledby="request-dialog-title" aria-describedby="request-dialog-description"
     onKeyDown={cycleFocus}
+    onCancel={event => { event.preventDefault(); close(); }}
+    onTransitionEnd={event => { if (closing.current && event.target === event.currentTarget && event.propertyName === 'opacity') finishClose(); }}
     onPointerDown={event => { backdropPress.current = isBackdrop(event); }}
     onClick={event => { if (backdropPress.current && isBackdrop(event)) close(); backdropPress.current = false; }}>
     <div className="request-dialog-content">
@@ -166,9 +223,11 @@ export function ContactRequestModal({ ref }: { ref: Ref<RequestModalHandle> }) {
         <button type="button" className="button button-dark request-submit" onClick={close}>Повернутися до сайту</button>
       </div> : <form className="request-form" aria-labelledby="request-dialog-title" aria-busy={status === 'pending'} onSubmit={submitRequest} noValidate>
         <div className="request-trap" aria-hidden="true"><label htmlFor="request-website">Website</label><input id="request-website" name="website" type="text" tabIndex={-1} autoComplete="off" maxLength={128}/></div>
+        <div className="request-fields">
         <div className="request-field"><label htmlFor="request-name">Ім’я <span className="request-optional">необов’язково</span></label><input ref={nameRef} id="request-name" name="name" type="text" autoComplete="given-name" maxLength={80} disabled={status === 'pending'} aria-invalid={nameError ? true : undefined} aria-describedby={nameError ? 'request-name-error' : undefined} value={name} onChange={event => { setName(event.target.value); setNameError(''); clearSubmitError(); }}/>{nameError ? <p id="request-name-error" className="request-field-error" role="alert">{nameError}</p> : null}</div>
         <div className="request-field"><label htmlFor="request-phone">Телефон</label><input ref={phoneRef} id="request-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+380 99 123 45 67…" maxLength={40} required disabled={status === 'pending'} aria-invalid={phoneError ? true : undefined} aria-describedby={phoneError ? 'request-phone-error' : undefined} value={phone} onChange={event => { setPhone(event.target.value); setPhoneError(''); clearSubmitError(); }}/>{phoneError ? <p id="request-phone-error" className="request-field-error" role="alert">{phoneError}</p> : null}</div>
         <div className="request-field"><label htmlFor="request-category">Напрям лікування</label><select ref={categoryRef} id="request-category" name="category" autoComplete="off" disabled={status === 'pending'} aria-invalid={categoryError ? true : undefined} aria-describedby={categoryError ? 'request-category-error' : undefined} value={category} onChange={event => { setCategory(event.target.value as RequestCategoryId); setCategoryError(''); clearSubmitError(); }}>{requestCategories.map(option => <option key={option.id} value={option.id}>{option.title}</option>)}</select>{categoryError ? <p id="request-category-error" className="request-field-error" role="alert">{categoryError}</p> : null}</div>
+        </div>
         <button type="submit" className="button button-dark request-submit" disabled={status === 'pending'}>{status === 'pending' ? <><span className="request-spinner" aria-hidden="true"/>Надсилаємо…</> : 'Надіслати заявку'}</button>
         {submitError ? <p className="request-status" role="alert">{submitError}{status === 'error' && !submitError.startsWith('Забагато') ? <> <a href={clinic.phoneHref}>{clinic.phone}</a>.</> : null}</p> : null}
       </form>}
