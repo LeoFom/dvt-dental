@@ -69,7 +69,7 @@
   .mobile-nav { display: none; }
   .hero { padding-top: 42px; padding-bottom: 48px; }
   .hero-stage { position: relative; isolation: isolate; min-height: 610px; background: transparent; }
-  .hero-stage::after { content: ''; display: none; position: absolute; inset: 0 0 0 auto; z-index: 0; width: 24px; background: linear-gradient(to left, var(--color-paper), transparent); pointer-events: none; }
+  .hero-stage::after { content: ''; display: block; position: absolute; inset: 0 0 0 auto; z-index: 0; width: 24px; background: linear-gradient(to left, var(--color-paper), transparent); pointer-events: none; }
   .hero-portrait { position: absolute; inset: 0; z-index: -1; display: block; mask-image: linear-gradient(to right, transparent 36%, #000 54%); }
   .hero-portrait img, .hero-portrait video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: right top; mask-image: linear-gradient(to bottom, #000 90%, transparent); }
   .hero-video-still { position: absolute; inset: 0; visibility: hidden; }
@@ -230,7 +230,7 @@
 
 @media (min-width: 1500px) { .hero { padding-block: 60px; } .hero-stage { min-height: 660px; } }
 @media (max-width: 1100px) {
-  .hero-stage::after { display: block; }
+  .hero-stage::after { display: none; }
   .wrap { width: calc(100% - 56px); }
   .hero-stage { min-height: 570px; }
   .hero-copy { width: 52%; }
@@ -290,7 +290,6 @@
   .header-call .icon { width: 21px; height: 21px; }
   .hero { width: 100%; margin-inline: 0; padding: 24px 0 24px 18px; }
   .hero-stage { --mobile-media-top: 110px; --mobile-media-height: min(330px, calc((100vw - 36px) * .8)); min-height: calc(var(--mobile-media-top) + var(--mobile-media-height)); overflow: clip; }
-  .hero-stage::after { width: 12px; }
   .hero-copy { width: calc(100% - 18px); padding-top: 28px; }
   .hero h1 { font-size: clamp(34px, 10vw, 52px); }
   .hero-description { font-size: 14px; max-width: 49%; margin-top: 18px; line-height: 1.65; }
