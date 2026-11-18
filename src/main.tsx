@@ -1,4 +1,4 @@
-import { StrictMode, useCallback, useRef, useState } from 'react';
+import { StrictMode, useCallback, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { clinic, questions, services } from './content';
 import { HeroVideo } from './HeroVideo';
@@ -30,6 +30,12 @@ function Brand() {
 function Header() {
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 801px)');
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
   return <header className="header" onKeyDown={e => { if (e.key === 'Escape' && open) { setOpen(false); menuButton.current?.focus(); } }}><div className="wrap header-inner">
     <Brand/>
     <nav className="desktop-nav" aria-label="Основна навігація"><a href="#services">Послуги</a><a href="#clinic">Клініка</a><a href="#questions">Запитання</a><a href="#contacts">Контакти</a></nav>
