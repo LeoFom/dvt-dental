@@ -43,22 +43,24 @@ test('requires both server-only credentials', async () => {
   for (const credentials of [{}, { TELEGRAM_BOT_TOKEN: 'test-credential' }, { TELEGRAM_CHAT_ID: '123' }]) assert.equal((await run(request(), undefined, credentials)).status, 503);
 });
 
-test('sends only normalized, bounded plain-text contact fields to the configured chat', async () => {
+test('sends readable formatted contact fields and a copy-phone action to the configured chat', async () => {
   let message;
   const result = await run(request(), async (url, options) => {
     assert.equal(url, 'https://api.telegram.org/bottest-credential/sendMessage');
     assert.equal(options.method, 'POST');
     message = JSON.parse(options.body);
     assert.equal(message.chat_id, '123');
-    assert.equal(message.parse_mode, undefined);
+    assert.equal(message.parse_mode, 'HTML');
     assert.ok(message.text.includes('Мар’яна-Олена'));
     assert.ok(message.text.includes('+380991234567'));
-    assert.ok(message.text.includes('Напрям: Потрібна консультація'));
+    assert.ok(message.text.includes('<b>Послуга:</b> Потрібна консультація'));
+    assert.deepEqual(message.reply_markup, { inline_keyboard: [[{ text: 'Скопіювати номер', copy_text: { text: '+380991234567' } }]] });
     return Response.json(delivered);
   });
   const response = await result.json();
   assert.equal(response.ok, true);
   assert.match(response.requestId, /^[a-f0-9-]{36}$/);
+  assert.ok(!message.text.includes(response.requestId));
   assert.equal(result.headers.get('Cache-Control'), 'no-store');
   assert.ok(!JSON.stringify(response).includes('1234567'));
   await run(request({ ...data, name: '' }), async (_, options) => {
@@ -82,8 +84,8 @@ test('delivers each selected treatment as its trusted label and defaults for old
     const result = await run(request({ ...data, name: '', category, categoryTitle: 'Injected title' }), async (_, options) => {
       calls++;
       const { text } = JSON.parse(options.body);
-      assert.ok(text.includes(`Напрям: ${label}\n`));
-      assert.ok(text.includes('Ім’я: Не вказано'));
+      assert.ok(text.includes(`<b>Послуга:</b> ${label}\n`));
+      assert.ok(text.includes('<b>Ім’я:</b> Не вказано'));
       assert.ok(!text.includes('Injected title'));
       return Response.json(delivered);
     });

@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { normalizeCategory, normalizePhone } from '../shared/contact.js';
+import { buildContactMessage } from '../server/telegram-message.js';
 
 const maxBodyBytes = 2048;
 function reply(status, body, headers = {}) {
@@ -52,13 +53,12 @@ export async function handleContact(request, { env = process.env, fetchImpl = fe
   if (!token || !chatId) return reply(503, { ok: false });
 
   const requestId = randomUUID();
-  const receivedAt = new Intl.DateTimeFormat('uk-UA', { timeZone: 'Europe/Kyiv', dateStyle: 'short', timeStyle: 'short' }).format(new Date());
-  const text = `Нова заявка з сайту DVT Denta\n\nІм’я: ${name || 'Не вказано'}\nТелефон: ${phone}\nНапрям: ${category.title}\n\nЧас: ${receivedAt}\nЗаявка: ${requestId}`;
+  const message = buildContactMessage({ name, phone, categoryTitle: category.title });
   try {
     const response = await fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text }),
+      body: JSON.stringify({ chat_id: chatId, ...message }),
       signal: AbortSignal.timeout(10000),
     });
     const result = await response.json();
