@@ -69,7 +69,7 @@
   .mobile-nav { display: none; }
   .hero { padding-top: 42px; padding-bottom: 48px; }
   .hero-stage { position: relative; isolation: isolate; min-height: 610px; background: transparent; }
-  .hero-stage::after { content: ''; position: absolute; inset: 0 0 0 auto; z-index: 0; width: 24px; background: linear-gradient(to left, var(--color-paper), transparent); pointer-events: none; }
+  .hero-stage::after { content: ''; display: none; position: absolute; inset: 0 0 0 auto; z-index: 0; width: 24px; background: linear-gradient(to left, var(--color-paper), transparent); pointer-events: none; }
   .hero-portrait { position: absolute; inset: 0; z-index: -1; display: block; mask-image: linear-gradient(to right, transparent 36%, #000 54%); }
   .hero-portrait img, .hero-portrait video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: right top; mask-image: linear-gradient(to bottom, #000 90%, transparent); }
   .hero-video-still { position: absolute; inset: 0; visibility: hidden; }
@@ -230,6 +230,7 @@
 
 @media (min-width: 1500px) { .hero { padding-block: 60px; } .hero-stage { min-height: 660px; } }
 @media (max-width: 1100px) {
+  .hero-stage::after { display: block; }
   .wrap { width: calc(100% - 56px); }
   .hero-stage { min-height: 570px; }
   .hero-copy { width: 52%; }
